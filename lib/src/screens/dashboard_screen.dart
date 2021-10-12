@@ -4,6 +4,7 @@ import 'package:healthnowapp/src/data/data.dart';
 import 'package:healthnowapp/src/models/models.dart';
 import 'package:healthnowapp/src/screens/doctor_info_screen.dart';
 import 'package:healthnowapp/src/screens/doctorlist_screen.dart';
+import 'package:healthnowapp/src/widgets/drawer.dart';
 import 'package:nb_utils/src/extensions/widget_extensions.dart';
 
 String selectedCategorie = "Adults";
@@ -26,6 +27,7 @@ class _DashBoardState extends State<DashBoard> {
 
   @override
   Widget build(BuildContext context) {
+    MyDrawer ddrawer = MyDrawer();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -33,8 +35,8 @@ class _DashBoardState extends State<DashBoard> {
         brightness: Brightness.light,
         iconTheme: IconThemeData(color: Colors.black87),
       ),
-      drawer: Drawer(child: Container() // Populate the Drawer in the next step.
-          ),
+      // drawer: Drawer(child: Container() // Populate the Drawer in the next step.
+      //     ),
       body: SingleChildScrollView(
         child: Container(
           color: Colors.white,
@@ -146,8 +148,11 @@ class _DashBoardState extends State<DashBoard> {
             ],
           ),
         ),
+        
       ),
+      drawer: ddrawer,
     );
+    
   }
 }
 
@@ -188,6 +193,7 @@ class _CategorieTileState extends State<CategorieTile> {
         ),
       ),
     );
+    
   }
 }
 
@@ -204,6 +210,7 @@ class SpecialistTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     
     return Container(
       width: 150,
       margin: EdgeInsets.only(right: 16),
