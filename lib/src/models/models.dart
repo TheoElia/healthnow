@@ -44,13 +44,14 @@ class CategoryModel {
       name: map['name'],
       image: map['image'],
       fee: map['fee'],
-       color: map['color'],
+      color: map['color'],
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory CategoryModel.fromJson(Map<String, dynamic> source) => CategoryModel.fromMap(source);
+  factory CategoryModel.fromJson(Map<String, dynamic> source) =>
+      CategoryModel.fromMap(source);
 }
 
 class ProfessionalModel {
@@ -93,10 +94,10 @@ class ProfessionalModel {
     return ProfessionalModel(
       id: map['id'],
       username: map['username'],
-      firstName: map['firstName'],
-      lastName: map['lastName'],
-      isPro: map['isPro'],
-      userImage: map['userImage'],
+      firstName: map['first_name'],
+      lastName: map['last_name'],
+      isPro: map['is_professional'],
+      userImage: map['user_image'],
       location: map['location'],
       appointments: map['appointments'],
       category: CategoryModel.fromMap(map['category']),
@@ -105,5 +106,6 @@ class ProfessionalModel {
 
   String toJson() => json.encode(toMap());
 
-  factory ProfessionalModel.fromJson(Map<String, dynamic> source) => ProfessionalModel.fromMap(source);
+  factory ProfessionalModel.fromJson(Map<String, dynamic> source) =>
+      ProfessionalModel.fromMap(source);
 }
