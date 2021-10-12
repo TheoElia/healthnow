@@ -19,11 +19,14 @@ class CategoryModel {
   String name;
   String image;
   double fee;
+  String color;
+
   CategoryModel({
     required this.id,
     required this.name,
     required this.image,
     required this.fee,
+    required this.color,
   });
 
   Map<String, dynamic> toMap() {
@@ -41,6 +44,7 @@ class CategoryModel {
       name: map['name'],
       image: map['image'],
       fee: map['fee'],
+       color: map['color'],
     );
   }
 

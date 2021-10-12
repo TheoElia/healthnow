@@ -123,7 +123,7 @@ class _DashBoardState extends State<DashBoard> {
                           imgAssetPath: widget.categories![index].image,
                           speciality: widget.categories![index].name,
                           fee: widget.categories![index].fee,
-                          backColor: Color(0xffFFEEE0),
+                          backColor: Color(0xfff69383),
                         ),
                       );
                     }),
@@ -141,6 +141,7 @@ class _DashBoardState extends State<DashBoard> {
               SizedBox(
                 height: 20,
               ),
+              Text('Most recent appointment shows here',style: TextStyle(fontSize: 17,color: Colors.grey),)
               // DoctorsTile(doctor: null,)
             ],
           ),
