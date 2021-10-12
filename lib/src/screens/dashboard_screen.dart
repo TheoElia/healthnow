@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
+
 import 'package:healthnowapp/src/data/data.dart';
-import 'package:healthnowapp/src/models/speciality.dart';
+import 'package:healthnowapp/src/models/models.dart';
 import 'package:healthnowapp/src/screens/doctor_info_screen.dart';
+import 'package:healthnowapp/src/screens/doctorlist_screen.dart';
+import 'package:nb_utils/src/extensions/widget_extensions.dart';
 
 String selectedCategorie = "Adults";
 
 class DashBoard extends StatefulWidget {
+  final List<CategoryModel>? categories;
+  const DashBoard({
+    Key? key,
+    required this.categories,
+  }) : super(key: key);
   @override
   _DashBoardState createState() => _DashBoardState();
 }
 
 class _DashBoardState extends State<DashBoard> {
-  List<String> categories = ["Adults", "Children", "Women", "Men"];
-
-  late List<SpecialityModel> specialities;
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
-    specialities = getSpeciality();
   }
 
   @override
@@ -89,14 +90,14 @@ class _DashBoardState extends State<DashBoard> {
               // Container(
               //   height: 30,
               //   child: ListView.builder(
-              //       itemCount: categories.length,
+              //       itemCount: widget.categories.length,
               //       shrinkWrap: true,
               //       physics: ClampingScrollPhysics(),
               //       scrollDirection: Axis.horizontal,
               //       itemBuilder: (context, index) {
               //         return CategorieTile(
-              //           categorie: categories[index],
-              //           isSelected: selectedCategorie == categories[index],
+              //           categorie: widget.categories[index],
+              //           isSelected: selectedCategorie == widget.categories[index],
               //           context: this,
               //         );
               //       }),
@@ -107,16 +108,23 @@ class _DashBoardState extends State<DashBoard> {
               Container(
                 height: 250,
                 child: ListView.builder(
-                    itemCount: specialities.length,
+                    itemCount: widget.categories!.length,
                     shrinkWrap: true,
                     physics: ClampingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
-                      return SpecialistTile(
-                        imgAssetPath: specialities[index].imgAssetPath,
-                        speciality: specialities[index].speciality,
-                        noOfDoctors: specialities[index].noOfDoctors,
-                        backColor: specialities[index].backgroundColor,
+                      return InkWell(
+                        onTap: () {
+                          DoctorList(
+                            categoryId: widget.categories![index].id,
+                          ).launch(context);
+                        },
+                        child: SpecialistTile(
+                          imgAssetPath: widget.categories![index].image,
+                          speciality: widget.categories![index].name,
+                          fee: widget.categories![index].fee,
+                          backColor: Color(0xffFFEEE0),
+                        ),
                       );
                     }),
               ),
@@ -133,7 +141,7 @@ class _DashBoardState extends State<DashBoard> {
               SizedBox(
                 height: 20,
               ),
-              DoctorsTile()
+              // DoctorsTile(doctor: null,)
             ],
           ),
         ),
@@ -185,12 +193,12 @@ class _CategorieTileState extends State<CategorieTile> {
 class SpecialistTile extends StatelessWidget {
   final String imgAssetPath;
   final String speciality;
-  final int noOfDoctors;
+  final double fee;
   final Color backColor;
   SpecialistTile(
       {required this.imgAssetPath,
       required this.speciality,
-      required this.noOfDoctors,
+      required this.fee,
       required this.backColor});
 
   @override
@@ -212,7 +220,7 @@ class SpecialistTile extends StatelessWidget {
             height: 6,
           ),
           Text(
-            "$noOfDoctors Doctors",
+            "GHC $fee",
             style: TextStyle(color: Colors.white, fontSize: 13),
           ),
           Image.asset(
@@ -227,12 +235,19 @@ class SpecialistTile extends StatelessWidget {
 }
 
 class DoctorsTile extends StatelessWidget {
+  final ProfessionalModel doctor;
+
+  const DoctorsTile({Key? key, required this.doctor}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => DoctorsInfo()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => DoctorsInfo(
+                      doctor: doctor,
+                    )));
       },
       child: Container(
         decoration: BoxDecoration(
@@ -241,7 +256,7 @@ class DoctorsTile extends StatelessWidget {
         child: Row(
           children: <Widget>[
             Image.asset(
-              "assets/images/doctor_pic.png",
+              "${doctor.userImage}",
               height: 50,
             ),
             SizedBox(
@@ -251,14 +266,14 @@ class DoctorsTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "Dr. Akua",
+                  "${doctor.firstName}",
                   style: TextStyle(color: Color(0xFFef3131), fontSize: 19),
                 ),
                 SizedBox(
                   height: 2,
                 ),
                 Text(
-                  "Heart Speailist",
+                  "${doctor.category.name}",
                   style: TextStyle(fontSize: 15),
                 )
               ],

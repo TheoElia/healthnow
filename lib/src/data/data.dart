@@ -1,24 +1,22 @@
 import 'package:flutter/cupertino.dart';
-import 'package:healthnowapp/src/models/speciality.dart';
+import 'package:healthnowapp/src/models/models.dart';
+import 'package:healthnowapp/src/network/network_utils.dart';
 
-List<SpecialityModel> getSpeciality() {
-  List<SpecialityModel> specialities = [
-    SpecialityModel(
-        backgroundColor: Color(0xffFBB97C),
-        imgAssetPath: "assets/images/img1.png",
-        noOfDoctors: 10,
-        speciality: "Cough & Cold"),
-    SpecialityModel(
-        backgroundColor: Color(0xffF69383),
-        imgAssetPath: "assets/images/img2.png",
-        noOfDoctors: 17,
-        speciality: "Heart Specialist"),
-    SpecialityModel(
-        backgroundColor: Color(0xffEACBCB),
-        imgAssetPath: "assets/images/img3.png",
-        noOfDoctors: 27,
-        speciality: "Diabetes Care"),
-  ];
+Future<List<CategoryModel>?> getCategories() async {
+ var result =
+      await handleResponse(await getRequest('/api/v1/services/fetch-all-categories/'));
 
-  return specialities;
+  Iterable list = result['objects'];
+  return list.map((model) => CategoryModel.fromJson(model)).toList();
+}
+
+Future<List<ProfessionalModel>?> getCategoryDoctors(int categoryId) async {
+  var body = {
+    'q': categoryId
+  };
+  var result = await handleResponse(
+      await postRequest('/api/v1/fixers/search-by-category/', body));
+
+  Iterable list = result['objects'];
+  return list.map((model) => ProfessionalModel.fromJson(model)).toList();
 }

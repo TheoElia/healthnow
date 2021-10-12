@@ -497,7 +497,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                       context,
                       new MaterialPageRoute(
                           builder: (context) => 
-                          new DashBoard()));
+                          new DashBoard(categories: [],)));
                     //  Navigator.pushReplacement(
                     //   context,
                     //   new MaterialPageRoute(

@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:healthnowapp/src/models/models.dart';
+import 'package:healthnowapp/src/network/config.dart';
+import 'package:healthnowapp/src/screens/dashboard_screen.dart';
 
 class DoctorsInfo extends StatefulWidget {
+  final ProfessionalModel doctor;
+
+  const DoctorsInfo({Key? key, required this.doctor}) : super(key: key);
   @override
   _DoctorsInfoState createState() => _DoctorsInfoState();
 }
@@ -28,7 +34,7 @@ class _DoctorsInfoState extends State<DoctorsInfo> {
               ),
               Row(
                 children: <Widget>[
-                  Image.asset("assets/images/doctor_pic2.png", height: 220),
+                  Image.asset( "$baseURL${widget.doctor.userImage}", height: 220),
                   SizedBox(
                     width: 20,
                   ),
@@ -40,32 +46,39 @@ class _DoctorsInfoState extends State<DoctorsInfo> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          "Dr. Akua",
+                          "${widget.doctor.firstName}",
                           style: TextStyle(fontSize: 32),
                         ),
                         Text(
-                          "Heart Speailist",
+                          "${widget.doctor.category.name}",
                           style: TextStyle(fontSize: 19, color: Colors.grey),
                         ),
                         SizedBox(
                           height: 40,
                         ),
-                        // Row(
-                        //   children: <Widget>[
-                        //     IconTile(
-                        //       backColor: Color(0xffFFECDD),
-                        //       imgAssetPath: "assets/images/email.png",
-                        //     ),
-                        //     IconTile(
-                        //       backColor: Color(0xffFEF2F0),
-                        //       imgAssetPath: "assets/images/call.png",
-                        //     ),
-                        //     IconTile(
-                        //       backColor: Color(0xffEBECEF),
-                        //       imgAssetPath: "assets/images/video_call.png",
-                        //     ),
-                        //   ],
-                        // )
+                        ButtonTheme(
+                minWidth: 100.0,
+                
+                child: RaisedButton(
+                  child: Text(
+                    'Book',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.0,
+                      
+                    ),
+                  ),
+                  onPressed: () {
+                  },
+                  color: Color(0xFFef3131),
+                  textColor: Colors.white,
+                  padding: EdgeInsets.all(15),
+                  splashColor: Colors.grey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    side: BorderSide(color: Color(0xFFef3131)),
+                  ),
+                ),)
                       ],
                     ),
                   ),
@@ -230,7 +243,7 @@ class _DoctorsInfoState extends State<DoctorsInfo> {
                           Container(
                             width: MediaQuery.of(context).size.width / 2 - 130,
                             child: Text(
-                              "Reviews\n 15",
+                              "Reviews\n ${widget.doctor.appointments}",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 17),
                             ),

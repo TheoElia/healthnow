@@ -341,7 +341,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                       context,
                       new MaterialPageRoute(
                           builder: (context) => 
-                          new DashBoard()));
+                          new DashBoard(categories: [],)));
                     
                   },
                   color: Color(0xFFef3131),
