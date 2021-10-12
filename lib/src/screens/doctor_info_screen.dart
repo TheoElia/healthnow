@@ -34,7 +34,8 @@ class _DoctorsInfoState extends State<DoctorsInfo> {
               ),
               Row(
                 children: <Widget>[
-                  Image.asset( "$baseURL${widget.doctor.userImage}", height: 220),
+                  Image.network("$baseURL${widget.doctor.userImage}",
+                      height: 220),
                   SizedBox(
                     width: 20,
                   ),
@@ -57,28 +58,26 @@ class _DoctorsInfoState extends State<DoctorsInfo> {
                           height: 40,
                         ),
                         ButtonTheme(
-                minWidth: 100.0,
-                
-                child: RaisedButton(
-                  child: Text(
-                    'Book',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18.0,
-                      
-                    ),
-                  ),
-                  onPressed: () {
-                  },
-                  color: Color(0xFFef3131),
-                  textColor: Colors.white,
-                  padding: EdgeInsets.all(15),
-                  splashColor: Colors.grey,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    side: BorderSide(color: Color(0xFFef3131)),
-                  ),
-                ),)
+                          minWidth: 100.0,
+                          child: RaisedButton(
+                            child: Text(
+                              'Book',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18.0,
+                              ),
+                            ),
+                            onPressed: () {},
+                            color: Color(0xFFef3131),
+                            textColor: Colors.white,
+                            padding: EdgeInsets.all(15),
+                            splashColor: Colors.grey,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              side: BorderSide(color: Color(0xFFef3131)),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -95,7 +94,7 @@ class _DoctorsInfoState extends State<DoctorsInfo> {
                 height: 16,
               ),
               Text(
-                "Dr. Akua is a cardiologist in Accra & affiliated with multiple hospitals in the  area.He received his medical degree from University of Ghana School of Medicine and has been in practice for more than 90 years. ",
+                "${widget.doctor.about}",
                 style: TextStyle(color: Colors.grey, fontSize: 16),
               ),
               SizedBox(
@@ -211,7 +210,7 @@ class _DoctorsInfoState extends State<DoctorsInfo> {
                           Container(
                             width: MediaQuery.of(context).size.width / 2 - 130,
                             child: Text(
-                              "Rating\n 4.0",
+                              "Rating\n ${widget.doctor.rating}",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 17),
                             ),

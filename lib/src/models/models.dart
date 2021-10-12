@@ -59,7 +59,9 @@ class ProfessionalModel {
   String username;
   String firstName;
   String lastName;
+  String about;
   bool isPro;
+  double rating;
   String userImage;
   String location;
   int appointments;
@@ -69,6 +71,8 @@ class ProfessionalModel {
     required this.username,
     required this.firstName,
     required this.lastName,
+    required this.about,
+    required this.rating,
     required this.isPro,
     required this.userImage,
     required this.location,
@@ -82,6 +86,8 @@ class ProfessionalModel {
       'username': username,
       'firstName': firstName,
       'lastName': lastName,
+      'about': about,
+      'rating': rating,
       'isPro': isPro,
       'userImage': userImage,
       'location': location,
@@ -96,6 +102,8 @@ class ProfessionalModel {
       username: map['username'],
       firstName: map['first_name'],
       lastName: map['last_name'],
+      about: map['about'],
+      rating: map['rating'],
       isPro: map['is_professional'],
       userImage: map['user_image'],
       location: map['location'],
