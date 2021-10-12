@@ -18,7 +18,10 @@ class _DoctorListState extends State<DoctorList> {
   @override
   void initState() {
     super.initState();
-    doctors=getCategoryDoctors(widget.categoryId) as List<ProfessionalModel>?;
+    
+  }
+  Future<void> init() async {
+    doctors= await getCategoryDoctors(widget.categoryId);
   }
 
   @override
