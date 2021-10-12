@@ -3,22 +3,9 @@ import 'package:healthnowapp/src/screens/pro-register.dart';
 import 'package:healthnowapp/src/screens/register.dart';
 import 'dart:convert';
 import 'package:http/http.dart';
-// import 'package:healthnowapp/src/models/vendor.dart';
-// import 'package:healthnowapp/src/screens/accounts/create_account.dart';
-// import 'package:healthnowapp/src/screens/accounts/enterpin.dart';
-// import 'package:healthnowapp/src/screens/choose_delivery.dart';
-// import 'package:healthnowapp/src/screens/landing.dart';
-// import 'package:healthnowapp/src/screens/verifypin.dart';
-// import 'package:healthnowapp/src/services/webservice.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:uuid/uuid.dart';
-
-// WeatherFactory wf = new WeatherFactory("0e5caa39057529fec21b1e8b76123ac8");
 
 class Choice extends StatefulWidget {
-  // final String phone;
-  // final String pin;
-  // Choice({Key key, @required this.phone, this.pin}) : super(key: key);
   @override
   _ChoiceState createState() => _ChoiceState();
 }

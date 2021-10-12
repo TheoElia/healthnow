@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:healthnowapp/src/screens/chatscreen.dart';
+import 'package:healthnowapp/src/screens/dashboard_screen.dart';
 import 'package:healthnowapp/src/screens/login.dart';
 import 'dart:convert';
 import 'package:http/http.dart';
@@ -492,11 +493,16 @@ class MyCustomFormState extends State<MyCustomForm> {
                     ),
                   ),
                   onPressed: () {
-                     Navigator.pushReplacement(
+                    Navigator.pushReplacement(
                       context,
                       new MaterialPageRoute(
                           builder: (context) => 
-                          new ChatScreen(img: 'assets/images/doctor.png', name: 'Dr. Kofi')));
+                          new DashBoard()));
+                    //  Navigator.pushReplacement(
+                    //   context,
+                    //   new MaterialPageRoute(
+                    //       builder: (context) => 
+                    //       new ChatScreen(img: 'assets/images/doctor.png', name: 'Dr. Kofi')));
                     // Validate returns true if the form is valid, or false
                     // otherwise.
                     // if (_formKey.currentState.validate()) {

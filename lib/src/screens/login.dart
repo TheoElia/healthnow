@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:healthnowapp/src/screens/choice.dart';
+import 'package:healthnowapp/src/screens/dashboard_screen.dart';
 import 'package:healthnowapp/src/screens/register.dart';
 import 'dart:convert';
 import 'package:http/http.dart';
-// import 'package:healthnowapp/src/models/vendor.dart';
-// import 'package:healthnowapp/src/screens/accounts/create_account.dart';
-// import 'package:healthnowapp/src/screens/accounts/enterpin.dart';
-// import 'package:healthnowapp/src/screens/choose_delivery.dart';
-// import 'package:healthnowapp/src/screens/landing.dart';
-// import 'package:healthnowapp/src/screens/verifypin.dart';
-// import 'package:healthnowapp/src/services/webservice.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:uuid/uuid.dart';
 
-// WeatherFactory wf = new WeatherFactory("0e5caa39057529fec21b1e8b76123ac8");
+
+
+
+
+
+
+import 'package:shared_preferences/shared_preferences.dart';
+
+
+
 
 class Login extends StatefulWidget {
-  // final String phone;
-  // final String pin;
-  // Login({Key key, @required this.phone, this.pin}) : super(key: key);
+  
+  
+  
   @override
   _LoginState createState() => _LoginState();
 }
@@ -26,9 +27,9 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
-    // final appTitle = 'Hisense Care+';
+    
     final bottom = MediaQuery.of(context).viewInsets.bottom;
-    // title: appTitle,
+    
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -52,7 +53,7 @@ class _LoginState extends State<Login> {
                           style: TextStyle(
                             color: Colors.grey[600],
                             fontSize: 20.0,
-                            // height: 1.5,
+                            
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -71,7 +72,7 @@ class _LoginState extends State<Login> {
   }
 }
 
-// Create a Form widget.
+
 class MyCustomForm extends StatefulWidget {
   final String phone;
   final String pin;
@@ -82,14 +83,14 @@ class MyCustomForm extends StatefulWidget {
   }
 }
 
-// Create a corresponding State class.
-// This class holds data related to the form.
+
+
 class MyCustomFormState extends State<MyCustomForm> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
-  //
-  // Note: This is a GlobalKey<FormState>,
-  // not a GlobalKey<MyCustomFormState>.
+  
+  
+  
+  
+  
 
   void Login(email, password) async {
     showLoaderDialog(context, "Please wait...");
@@ -100,10 +101,10 @@ class MyCustomFormState extends State<MyCustomForm> {
     print(number);
     print(password);
     Map<String, String> requestHeaders = {
-      // 'Content-type': 'application/json',
+      
       'Accept': 'application/json',
-      // 'Token':'AAAAIl3GvqE:APA91bEJ3NkSzL6YrdyTfuEVXJPSjgve5qs_h3cX8MA82mrU2HetPRxf_',
-      // 'KeyCode': myuid
+      
+      
     };
 
     Response response =
@@ -113,7 +114,7 @@ class MyCustomFormState extends State<MyCustomForm> {
               'phone': number,
               'password': password,
               'refer': ''
-              // "FireBaseKey": "37473483743874",
+              
             }));
     print(response.body);
     Map data = jsonDecode(response.body);
@@ -128,9 +129,9 @@ class MyCustomFormState extends State<MyCustomForm> {
       _saveObj('profile', jsonEncode(profile));
       _saveObj('wallet', jsonEncode(wallet));
       print(data);
-      // Navigator.pushReplacement(
-      //     context, new MaterialPageRoute(builder: (context) => Delivery()
-      //     ));
+      
+      
+      
     } else {
       Navigator.of(context, rootNavigator: true).pop();
       showDialog(
@@ -138,7 +139,7 @@ class MyCustomFormState extends State<MyCustomForm> {
           builder: (context) {
             return AlertDialog(content: Text(data['message']));
           });
-      // Navigator.pushReplacement(context,new MaterialPageRoute(builder: (context) => new SetPin(text: phone,)));
+      
     }
   }
 
@@ -163,7 +164,7 @@ class MyCustomFormState extends State<MyCustomForm> {
   _save(val) async {
     final prefs = await SharedPreferences.getInstance();
     final key = 'otp';
-    // final value = 42;
+    
     prefs.setString(key, val);
     print('saved $val');
   }
@@ -171,20 +172,20 @@ class MyCustomFormState extends State<MyCustomForm> {
   _saveObj(keyi, val) async {
     final prefs = await SharedPreferences.getInstance();
     final key = '$keyi';
-    // final value = 42;
+    
     prefs.setString(key, val);
     print('saved $val');
   }
 
   final _formKey = GlobalKey<FormState>();
-  // of the TextField.
+  
   final email = TextEditingController();
   final password = TextEditingController();
   final countryCode = "233";
 
   @override
   Widget build(BuildContext context) {
-    // Build a Form widget using the _formKey created above.
+    
 
     return Form(
       key: _formKey,
@@ -199,7 +200,7 @@ class MyCustomFormState extends State<MyCustomForm> {
             child: Text("Email", style: TextStyle(
                             color: Colors.grey[800],
                             fontSize: 15.0,
-                            // height: 1.5,
+                            
                             fontWeight: FontWeight.bold,
                           ),
                           ),
@@ -215,9 +216,9 @@ class MyCustomFormState extends State<MyCustomForm> {
               child:TextFormField(
               cursorColor: Colors.grey,
               validator: (value) {
-                // if (value.isEmpty) {
-                //   return 'Please Enter Password';
-                // }
+                
+                
+                
                 return null;
               },
               controller: email,
@@ -252,7 +253,7 @@ class MyCustomFormState extends State<MyCustomForm> {
             child: Text("Password", style: TextStyle(
                             color: Colors.grey[800],
                             fontSize: 15.0,
-                            // height: 1.5,
+                            
                             fontWeight: FontWeight.bold,
                           ),
                           ),
@@ -269,9 +270,9 @@ class MyCustomFormState extends State<MyCustomForm> {
               cursorColor: Colors.grey,
               showCursor: true,
               validator: (value) {
-                // if (value.isEmpty) {
-                //   return 'Please Enter Password';
-                // }
+                
+                
+                
                 return null;
               },
               controller: password,
@@ -300,44 +301,48 @@ class MyCustomFormState extends State<MyCustomForm> {
           SizedBox(
             height: 10.0,
           ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.start,
-          //   children: <Widget>[
-          //     Container(
-          //       width: 300,
-          //       child: Text(
-          //         """By signing up, you agree to our terms and privacy policy""",
-          //         style: TextStyle(
-          //           fontSize: 15,
-          //           color: Colors.white,
-          //         ),
-          //         textAlign: TextAlign.end,
-          //         maxLines: 3,
-          //       ),
-          //     ),
-          //   ],
-          // ),
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
             child: Center(
               child: ButtonTheme(
                 minWidth: 300.0,
-                // ignore: deprecated_member_use
+                
                 child: RaisedButton(
                   child: Text(
                     'login',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18.0,
-                      // height: 1.0,
+                      
                     ),
                   ),
                   onPressed: () {
-                    // Validate returns true if the form is valid, or false
-                    // otherwise.
-                    // if (_formKey.currentState.validate()) {
-                    //   Login(email.text, password.text);
-                    // }
+                    
+                    
+                    
+                    Navigator.pushReplacement(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => 
+                          new DashBoard()));
+                    
                   },
                   color: Color(0xFFef3131),
                   textColor: Colors.white,
