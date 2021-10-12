@@ -223,8 +223,8 @@ class SpecialistTile extends StatelessWidget {
             "GHC $fee",
             style: TextStyle(color: Colors.white, fontSize: 13),
           ),
-          Image.asset(
-            imgAssetPath,
+          Image.network(
+            'https://healthnow.pywe.org${imgAssetPath}',
             height: 160,
             fit: BoxFit.fitHeight,
           )

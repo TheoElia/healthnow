@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Center(
         child: Text(
-                "HealthNow",
+                "Your HealthNow",
                 style: TextStyle(
                     color: Colors.red.withOpacity(0.8),
                     fontSize: 30,
