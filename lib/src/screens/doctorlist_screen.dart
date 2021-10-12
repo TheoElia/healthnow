@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:healthnowapp/src/data/data.dart';
 import 'package:healthnowapp/src/models/models.dart';
@@ -14,14 +15,22 @@ class DoctorList extends StatefulWidget {
 }
 
 class _DoctorListState extends State<DoctorList> {
-  late List<ProfessionalModel>? doctors;
+  List<ProfessionalModel>? doctors = [];
+  bool loading = false;
   @override
   void initState() {
     super.initState();
-    
+    init();
   }
+
   Future<void> init() async {
-    doctors= await getCategoryDoctors(widget.categoryId);
+    setState(() {
+      loading = true;
+    });
+    doctors = await getCategoryDoctors(widget.categoryId);
+    setState(() {
+      loading = false;
+    });
   }
 
   @override
@@ -45,21 +54,24 @@ class _DoctorListState extends State<DoctorList> {
       body: Container(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(8),
-          child: Wrap(
-            runSpacing: 8,
-            spacing: 8,
-            children: doctors!.map((e) {
-              return GestureDetector(
-                onTap: () {
-                  DoctorsInfo(
-                    doctor: e,
-                  ).launch(context);
-                },
-                child: DoctorsTile( doctor: e,
-                ),
-              );
-            }).toList(),
-          ).center(),
+          child: loading
+              ? CupertinoActivityIndicator().center()
+              : Wrap(
+                  runSpacing: 8,
+                  spacing: 8,
+                  children: doctors!.map((e) {
+                    return GestureDetector(
+                      onTap: () {
+                        DoctorsInfo(
+                          doctor: e,
+                        ).launch(context);
+                      },
+                      child: DoctorsTile(
+                        doctor: e,
+                      ),
+                    );
+                  }).toList(),
+                ).center(),
         ),
       ),
     );
