@@ -61,7 +61,7 @@ class _DoctorsInfoState extends State<DoctorsInfo> {
                 
                 child: RaisedButton(
                   child: Text(
-                    'Book',
+                    'Book Appointment',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18.0,

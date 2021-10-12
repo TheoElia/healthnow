@@ -1,4 +1,4 @@
-const baseURL = 'https://healthnow.pywe.org/';
+const baseURL = 'https://healthnow.pywe.org';
 const noInternetMsg = 'Oops No Internet';
 
 const msg = 'message';
