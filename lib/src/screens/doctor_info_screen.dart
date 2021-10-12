@@ -50,22 +50,22 @@ class _DoctorsInfoState extends State<DoctorsInfo> {
                         SizedBox(
                           height: 40,
                         ),
-                        Row(
-                          children: <Widget>[
-                            IconTile(
-                              backColor: Color(0xffFFECDD),
-                              imgAssetPath: "assets/images/email.png",
-                            ),
-                            IconTile(
-                              backColor: Color(0xffFEF2F0),
-                              imgAssetPath: "assets/images/call.png",
-                            ),
-                            IconTile(
-                              backColor: Color(0xffEBECEF),
-                              imgAssetPath: "assets/images/video_call.png",
-                            ),
-                          ],
-                        )
+                        // Row(
+                        //   children: <Widget>[
+                        //     IconTile(
+                        //       backColor: Color(0xffFFECDD),
+                        //       imgAssetPath: "assets/images/email.png",
+                        //     ),
+                        //     IconTile(
+                        //       backColor: Color(0xffFEF2F0),
+                        //       imgAssetPath: "assets/images/call.png",
+                        //     ),
+                        //     IconTile(
+                        //       backColor: Color(0xffEBECEF),
+                        //       imgAssetPath: "assets/images/video_call.png",
+                        //     ),
+                        //   ],
+                        // )
                       ],
                     ),
                   ),
@@ -88,80 +88,81 @@ class _DoctorsInfoState extends State<DoctorsInfo> {
               SizedBox(
                 height: 24,
               ),
-              Row(
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Image.asset("assets/images/mappin.png"),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                "Address",
-                                style: TextStyle(
-                                    color: Colors.black87.withOpacity(0.7),
-                                    fontSize: 20),
-                              ),
-                              SizedBox(
-                                height: 3,
-                              ),
-                              Container(
-                                  width:
-                                      MediaQuery.of(context).size.width - 268,
-                                  child: Text(
-                                    "House # 2, Pearl Street, Accra",
-                                    style: TextStyle(color: Colors.grey),
-                                  ))
-                            ],
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Image.asset("assets/images/clock.png"),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                "Time",
-                                style: TextStyle(
-                                    color: Colors.black87.withOpacity(0.7),
-                                    fontSize: 20),
-                              ),
-                              SizedBox(
-                                height: 3,
-                              ),
-                              Container(
-                                  width:
-                                      MediaQuery.of(context).size.width - 268,
-                                  child: Text(
-                                    '''Monday - Friday
-Open till 7 Pm''',
-                                    style: TextStyle(color: Colors.grey),
-                                  ))
-                            ],
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                  Image.asset(
-                    "assets/images/map.png",
-                    width: 180,
-                  )
-                ],
-              ),
+//               Row(
+//                 children: <Widget>[
+//                   Column(
+//                     children: <Widget>[
+// //                       Row(
+// //                         children: <Widget>[
+// //                           Image.asset("assets/images/mappin.png"),
+// //                           SizedBox(
+// //                             width: 20,
+// //                           ),
+// //                           Column(
+// //                             crossAxisAlignment: CrossAxisAlignment.start,
+// //                             children: <Widget>[
+// //                               Text(
+// //                                 "Address",
+// //                                 style: TextStyle(
+// //                                     color: Colors.black87.withOpacity(0.7),
+// //                                     fontSize: 20),
+// //                               ),
+// //                               SizedBox(
+// //                                 height: 3,
+// //                               ),
+// //                               Container(
+// //                                   width:
+// //                                       MediaQuery.of(context).size.width - 268,
+// //                                   child: Text(
+// //                                     "House # 2, Pearl Street, Accra",
+// //                                     style: TextStyle(color: Colors.grey),
+// //                                   ))
+// //                             ],
+// //                           )
+// //                         ],
+// //                       ),
+// //                       SizedBox(
+// //                         height: 20,
+// //                       ),
+// //                       Row(
+// //                         children: <Widget>[
+// //                           Image.asset("assets/images/clock.png"),
+// //                           SizedBox(
+// //                             width: 20,
+// //                           ),
+// //                           Column(
+// //                             crossAxisAlignment: CrossAxisAlignment.start,
+// //                             children: <Widget>[
+// //                               Text(
+// //                                 "Time",
+// //                                 style: TextStyle(
+// //                                     color: Colors.black87.withOpacity(0.7),
+// //                                     fontSize: 20),
+// //                               ),
+// //                               SizedBox(
+// //                                 height: 3,
+// //                               ),
+// //                               Container(
+// //                                   width:
+// //                                       MediaQuery.of(context).size.width - 268,
+// //                                   child: Text(
+// //                                     '''Monday - Friday
+// // Open till 7 Pm''',
+// //                                     style: TextStyle(color: Colors.grey),
+// //                                   ))
+// //                             ],
+// //                           )
+// //                         ],
+// //                       )
+// //                     ],
+// //                   ),
+// //                   Image.asset(
+// //                     "assets/images/map.png",
+// //                     width: 180,
+// //                   )
+// //                 ],
+// //               ),
+
               Text(
                 "Activity",
                 style: TextStyle(

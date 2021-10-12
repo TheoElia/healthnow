@@ -54,28 +54,28 @@ class _DashBoardState extends State<DashBoard> {
               SizedBox(
                 height: 40,
               ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 24),
-                height: 50,
-                decoration: BoxDecoration(
-                    color: Color(0xffEFEFEF),
-                    borderRadius: BorderRadius.circular(14)),
-                child: Row(
-                  children: <Widget>[
-                    Icon(Icons.search),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      "Search",
-                      style: TextStyle(color: Colors.grey, fontSize: 19),
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
+              // Container(
+              //   padding: EdgeInsets.symmetric(horizontal: 24),
+              //   height: 50,
+              //   decoration: BoxDecoration(
+              //       color: Color(0xffEFEFEF),
+              //       borderRadius: BorderRadius.circular(14)),
+              //   child: Row(
+              //     children: <Widget>[
+              //       Icon(Icons.search),
+              //       SizedBox(
+              //         width: 10,
+              //       ),
+              //       Text(
+              //         "Search",
+              //         style: TextStyle(color: Colors.grey, fontSize: 19),
+              //       )
+              //     ],
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: 30,
+              // ),
               Text(
                 "Categories",
                 style: TextStyle(
@@ -86,24 +86,24 @@ class _DashBoardState extends State<DashBoard> {
               SizedBox(
                 height: 20,
               ),
-              Container(
-                height: 30,
-                child: ListView.builder(
-                    itemCount: categories.length,
-                    shrinkWrap: true,
-                    physics: ClampingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return CategorieTile(
-                        categorie: categories[index],
-                        isSelected: selectedCategorie == categories[index],
-                        context: this,
-                      );
-                    }),
-              ),
-              SizedBox(
-                height: 20,
-              ),
+              // Container(
+              //   height: 30,
+              //   child: ListView.builder(
+              //       itemCount: categories.length,
+              //       shrinkWrap: true,
+              //       physics: ClampingScrollPhysics(),
+              //       scrollDirection: Axis.horizontal,
+              //       itemBuilder: (context, index) {
+              //         return CategorieTile(
+              //           categorie: categories[index],
+              //           isSelected: selectedCategorie == categories[index],
+              //           context: this,
+              //         );
+              //       }),
+              // ),
+              // SizedBox(
+              //   height: 20,
+              // ),
               Container(
                 height: 250,
                 child: ListView.builder(
@@ -124,7 +124,7 @@ class _DashBoardState extends State<DashBoard> {
                 height: 20,
               ),
               Text(
-                "Closest Doctor",
+                "Recent Appointment",
                 style: TextStyle(
                     color: Colors.black87.withOpacity(0.8),
                     fontSize: 25,
@@ -270,7 +270,7 @@ class DoctorsTile extends StatelessWidget {
                   color: Color(0xFFef3131),
                   borderRadius: BorderRadius.circular(13)),
               child: Text(
-                "Call",
+                "View",
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 13,
