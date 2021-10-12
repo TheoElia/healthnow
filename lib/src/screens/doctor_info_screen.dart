@@ -58,26 +58,28 @@ class _DoctorsInfoState extends State<DoctorsInfo> {
                           height: 40,
                         ),
                         ButtonTheme(
-                          minWidth: 100.0,
-                          child: RaisedButton(
-                            child: Text(
-                              'Book',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.0,
-                              ),
-                            ),
-                            onPressed: () {},
-                            color: Color(0xFFef3131),
-                            textColor: Colors.white,
-                            padding: EdgeInsets.all(15),
-                            splashColor: Colors.grey,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              side: BorderSide(color: Color(0xFFef3131)),
-                            ),
-                          ),
-                        )
+                minWidth: 100.0,
+                
+                child: RaisedButton(
+                  child: Text(
+                    'Book Appointment',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.0,
+                      
+                    ),
+                  ),
+                  onPressed: () {
+                  },
+                  color: Color(0xFFef3131),
+                  textColor: Colors.white,
+                  padding: EdgeInsets.all(15),
+                  splashColor: Colors.grey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    side: BorderSide(color: Color(0xFFef3131)),
+                  ),
+                ),)
                       ],
                     ),
                   ),

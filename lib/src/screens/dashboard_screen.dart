@@ -263,8 +263,8 @@ class DoctorsTile extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 18),
         child: Row(
           children: <Widget>[
-            Image.asset(
-              "${doctor.userImage}",
+            Image.network(
+              "https://healthnow.pywe.org${doctor.userImage}",
               height: 50,
             ),
             SizedBox(
