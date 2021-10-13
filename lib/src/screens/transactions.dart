@@ -51,7 +51,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
     AlertDialog alert = AlertDialog(
       content: new Row(
         children: [
-          CircularProgressIndicator(color: Color(0xFFf9c923)),
+          CircularProgressIndicator(color: Color(0xFFef3131)),
           Container(margin: EdgeInsets.only(left: 7), child: Text("$text")),
         ],
       ),
@@ -172,7 +172,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Credit Topups"),
-        backgroundColor: Color(0xFFf9c923),
+        backgroundColor: Color(0xFFef3131),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
