@@ -117,3 +117,35 @@ class ProfessionalModel {
   factory ProfessionalModel.fromJson(Map<String, dynamic> source) =>
       ProfessionalModel.fromMap(source);
 }
+
+
+class MessageModel {
+  int senderId;
+  int receiverId;
+  String msg;
+  String time;
+
+  MessageModel({required this.senderId, required this.receiverId, required this.msg, required this.time});
+
+  Map<String, dynamic> toMap() {
+    return {
+      'senderId': senderId,
+      'receiverId': receiverId,
+      'msg': msg,
+      'time': time,
+    };
+  }
+
+  factory MessageModel.fromMap(Map<String, dynamic> map) {
+    return MessageModel(
+      senderId: map['senderId'],
+      receiverId: map['receiverId'],
+      msg: map['msg'],
+      time: map['time'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory MessageModel.fromJson(Map<String, dynamic> source) => MessageModel.fromMap(source);
+}
