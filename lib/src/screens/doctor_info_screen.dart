@@ -7,6 +7,8 @@ import 'package:healthnowapp/src/models/models.dart';
 import 'package:healthnowapp/src/models/user.dart';
 import 'package:healthnowapp/src/network/config.dart';
 import 'package:healthnowapp/src/screens/dashboard_screen.dart';
+import 'package:healthnowapp/src/screens/orders.dart';
+import 'package:http/http.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class DoctorsInfo extends StatefulWidget {
@@ -376,13 +378,89 @@ class _DoctorsInfoState extends State<DoctorsInfo> {
   }
 
   void makeRequest(String text, int id, double fee) async {
+    showLoaderDialog(context, "Please wait...");
     final pref = await SharedPreferences.getInstance();
     String? user = pref.getString('user');
     User myuser = User.fromJson(jsonDecode(user!));
+    final w = 'wallet';
+    String wallet = pref.getString(w) ?? '0';
+    String mywallet = wallet;
     int userId = myuser.id;
-    sendRequest(text, id, fee, userId);
+    print(fee);
+    print(id);
+    print(text);
+    print(userId);
+    // var resp = sendRequest(text, id, fee, userId);
+    Map<String, String> requestHeaders = {
+      // 'Content-type': 'application/json',
+      'Accept': 'application/json',
+      // 'Token':'AAAAIl3GvqE:APA91bEJ3NkSzL6YrdyTfuEVXJPSjgve5qs_h3cX8MA82mrU2HetPRxf_',
+      // 'KeyCode': myuid
+    };
+
+    Response response =
+        await post(Uri.parse('https://healthnow.pywe.org/api/v1/services/create-request/'),
+            headers: requestHeaders,
+            body: jsonEncode({
+              'patient': userId,
+              'professional': id,
+              'problem': text,
+              'fee': fee,
+            }));
+    print(response.body);
+    Map data = jsonDecode(response.body);
+    print(data);
+     
+    
+    if (data['success']) {
+    //   var success = data['success']; 
+    //   print(data);
+    //  if (success) {
+       Navigator.of(context, rootNavigator: true).pop();
+       Navigator.of(context, rootNavigator: true).pop();
+      // showDialog(
+      //     context: context,
+      //     builder: (context) {
+      //       return AlertDialog(content: Text("Request has been made. Please await response."));
+      //     });
+      Navigator.pushReplacement(
+          context,
+          new MaterialPageRoute(
+              builder: (context) => new OrdersScreen(
+                    user: myuser,
+                    wallet: mywallet,
+                  )));
+     }else{
+       Navigator.of(context, rootNavigator: true).pop();
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(content: Text("Request failed. Please try again"));
+          });
+     }
+
   }
 }
+
+
+  showLoaderDialog(BuildContext context, text) {
+    AlertDialog alert = AlertDialog(
+      content: new Row(
+        children: [
+          CircularProgressIndicator(color: Color(0xFFef3131)),
+          Container(margin: EdgeInsets.only(left: 7), child: Text("$text")),
+        ],
+      ),
+    );
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
 
 class IconTile extends StatelessWidget {
   final String imgAssetPath;

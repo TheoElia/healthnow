@@ -19,11 +19,11 @@ Future<List<ProfessionalModel>?> getCategoryDoctors(int categoryId) async {
   return list.map((model) => ProfessionalModel.fromJson(model)).toList();
 }
 
-Future<String?> sendRequest(String text, int id, double fee,int userId) async {
+Future<bool?> sendRequest(String text, int id, double fee,int userId) async {
   var body = {'problem': text,'patient':userId,'professional':id,'fee':fee};
   var result = await handleResponse(
       await postRequest('/api/v1/services/create-request/', body));
-
   String message = result['message'];
-  return message;
+  Future<bool?> success = result['success'];
+  return success;
 }

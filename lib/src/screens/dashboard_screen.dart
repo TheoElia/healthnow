@@ -1,25 +1,35 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import 'package:healthnowapp/src/data/data.dart';
 import 'package:healthnowapp/src/models/models.dart';
+import 'package:healthnowapp/src/models/user.dart';
 import 'package:healthnowapp/src/screens/doctor_info_screen.dart';
 import 'package:healthnowapp/src/screens/doctorlist_screen.dart';
+import 'package:healthnowapp/src/screens/pro-orders.dart';
 import 'package:healthnowapp/src/screens/pro-register.dart';
 import 'package:healthnowapp/src/widgets/drawer.dart';
 import 'package:nb_utils/src/extensions/widget_extensions.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 String selectedCategorie = "Adults";
 bool userExists = false;
 
 class DashBoard extends StatefulWidget {
   final List<CategoryModel>? categories;
+  final bool isProfessional;
   const DashBoard({
     Key? key,
     required this.categories,
+    required this.isProfessional,
   }) : super(key: key);
   @override
   _DashBoardState createState() => _DashBoardState();
+  
 }
+
+
 
 class _DashBoardState extends State<DashBoard> {
   @override
@@ -30,6 +40,20 @@ class _DashBoardState extends State<DashBoard> {
   @override
   Widget build(BuildContext context) {
     MyDrawer ddrawer = MyDrawer();
+     goToDashboard() async{
+    final pref = await SharedPreferences.getInstance();
+    final u = 'user';
+    String user = pref.getString(u) ?? '0';
+    final w = 'wallet';
+    String wallet = pref.getString(w) ?? '0';
+    String mywallet = wallet;
+    User myuser = User.fromJson(jsonDecode(user));
+    Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => 
+                          new ProOrdersScreen(user: myuser,wallet: mywallet,)));
+  }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -59,7 +83,7 @@ class _DashBoardState extends State<DashBoard> {
               SizedBox(
                 height: 40,
               ),
-        userExists?Padding(
+        widget.isProfessional?Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
             child: Center(
               child: ButtonTheme(
@@ -75,16 +99,8 @@ class _DashBoardState extends State<DashBoard> {
                     ),
                   ),
                   onPressed: () {
-                    // Validate returns true if the form is valid, or false
-                    // otherwise.
-                    // if (_formKey.currentState.validate()) {
-                    //   ProRegister(email.text, password.text);
-                    // }
-                   Navigator.push(
-                      context,
-                      new MaterialPageRoute(
-                          builder: (context) => 
-                          new ProRegister()));
+                    goToDashboard();
+                  
                   },
                   color: Color(0xFFef3131),
                   textColor: Colors.white,
@@ -230,6 +246,8 @@ class CategorieTile extends StatefulWidget {
 class _CategorieTileState extends State<CategorieTile> {
   @override
   Widget build(BuildContext context) {
+    
+    
     return GestureDetector(
       onTap: () {
         widget.context.setState(() {

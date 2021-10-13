@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:healthnowapp/src/models/user.dart';
+import 'package:healthnowapp/src/screens/pro-orders.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DoneRegister extends StatefulWidget {
@@ -36,6 +40,21 @@ class _DoneRegisterState extends State<DoneRegister> {
     }
     // return value;
     // print('read: $value');
+  }
+
+  goToDashboard() async{
+    final pref = await SharedPreferences.getInstance();
+    final u = 'user';
+    String user = pref.getString(u) ?? '0';
+    final w = 'wallet';
+    String wallet = pref.getString(w) ?? '0';
+    String mywallet = wallet;
+    User myuser = User.fromJson(jsonDecode(user));
+    Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => 
+                          new ProOrdersScreen(user: myuser,wallet: mywallet,)));
   }
 
   @override
@@ -92,8 +111,42 @@ class _DoneRegisterState extends State<DoneRegister> {
                   textAlign: TextAlign.center,
                 ),
               ),
+              SizedBox(height: 10,),
+              Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            child: Center(
+              child: ButtonTheme(
+                minWidth: 300.0,
+                // ignore: deprecated_member_use
+                child: RaisedButton(
+                  child: Text(
+                    'Go to Dashboard',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.0,
+                      // height: 1.0,
+                    ),
+                  ),
+                  onPressed: () {
+                    // take professional to their dashboard
+                    
+                     goToDashboard();
+
+                  },
+                  color: Color(0xFFef3131),
+                  textColor: Colors.white,
+                  padding: EdgeInsets.all(15),
+                  splashColor: Colors.grey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    side: BorderSide(color: Color(0xFFef3131)),
+                  ),
+                ),
+              ),
+            ),
+          ),
               SizedBox(
-                height: 190,
+                height: 100,
               )
             ],
           ),

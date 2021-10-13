@@ -1,16 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:healthnowapp/src/screens/done-registering.dart';
 import 'package:healthnowapp/src/screens/login.dart';
 import 'dart:convert';
 import 'package:http/http.dart';
-// import 'package:healthnowapp/src/models/vendor.dart';
-// import 'package:healthnowapp/src/screens/accounts/create_account.dart';
-// import 'package:healthnowapp/src/screens/accounts/enterpin.dart';
-// import 'package:healthnowapp/src/screens/choose_delivery.dart';
-// import 'package:healthnowapp/src/screens/landing.dart';
-// import 'package:healthnowapp/src/screens/verifypin.dart';
-// import 'package:healthnowapp/src/services/webservice.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:file_picker/file_picker.dart';
 // import 'package:uuid/uuid.dart';
 
 // WeatherFactory wf = new WeatherFactory("0e5caa39057529fec21b1e8b76123ac8");
@@ -91,14 +87,15 @@ class MyCustomFormState extends State<MyCustomForm> {
   // Note: This is a GlobalKey<FormState>,
   // not a GlobalKey<MyCustomFormState>.
 
-  void ProRegister(email, password) async {
+   void Register(fname,lname,email, password) async {
     showLoaderDialog(context, "Please wait...");
     final pref = await SharedPreferences.getInstance();
-    final k = 'uuid';
+    final k = 'token';
+    final c = 'category';
     final myuid = pref.getString(k) ?? '0';
-    final number = "233" + email;
-    print(number);
-    print(password);
+    final cat = pref.getInt(c) ?? 0;
+    // print(number);
+    // print(password);
     Map<String, String> requestHeaders = {
       // 'Content-type': 'application/json',
       'Accept': 'application/json',
@@ -107,29 +104,32 @@ class MyCustomFormState extends State<MyCustomForm> {
     };
 
     Response response =
-        await post(Uri(),
+        await post(Uri.parse('https://healthnow.pywe.org/api/v1/accounts/create-professional/'),
             headers: requestHeaders,
             body: jsonEncode({
-              'phone': number,
+              'first_name': fname,
+              'last_name': lname,
+              'email': email,
               'password': password,
-              'refer': ''
-              // "FireBaseKey": "37473483743874",
+              'notification_token':myuid,
             }));
     print(response.body);
     Map data = jsonDecode(response.body);
     print(data);
     if (data['success']) {
       var user = data['user']['user'];
-      var settings = data['user']['settings'];
-      var profile = data['user']['profile'];
       var wallet = data['user']['wallet'];
       _saveObj('user', jsonEncode(user));
-      _saveObj('settings', jsonEncode(settings));
-      _saveObj('profile', jsonEncode(profile));
       _saveObj('wallet', jsonEncode(wallet));
       print(data);
+      // TODO: upload documents here
+      Navigator.pushReplacement(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => 
+                          new DoneRegister()));
       // Navigator.pushReplacement(
-      //     context, new MaterialPageRoute(builder: (context) => Delivery()
+      //     context, new MaterialPageRoute(builder: (context) => DoctorList(categoryId:cat,)
       //     ));
     } else {
       Navigator.of(context, rootNavigator: true).pop();
@@ -176,11 +176,32 @@ class MyCustomFormState extends State<MyCustomForm> {
     print('saved $val');
   }
 
+  Future getPdfAndUpload() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+    type: FileType.custom,
+      allowedExtensions: ['jpg', 'pdf', 'doc'],
+      allowMultiple: true,
+    );
+    if (result != null) {
+      // user has selected files
+      List<File> files = result.paths.map((path) => File(path!)).toList();
+      print(files);
+} else {
+  // User canceled the picker
+}
+
+  }
+
   final _formKey = GlobalKey<FormState>();
   // of the TextField.
   final email = TextEditingController();
   final password = TextEditingController();
+  final fname = TextEditingController();
+  final lname = TextEditingController();
+  // final age = TextEditingController();
   final countryCode = "233";
+  
+
 
   @override
   Widget build(BuildContext context) {
@@ -220,7 +241,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                 // }
                 return null;
               },
-              controller: email,
+              controller: fname,
               obscureText: false,
               decoration: 
               new InputDecoration(
@@ -273,7 +294,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                 // }
                 return null;
               },
-              controller: email,
+              controller: lname,
               obscureText: false,
               decoration: 
               new InputDecoration(
@@ -300,59 +321,7 @@ class MyCustomFormState extends State<MyCustomForm> {
           SizedBox(
             height: 10.0,
           ),
-          Container(
-            padding: EdgeInsets.only(left: 5,bottom: 5),
-            child: Text("Age", style: TextStyle(
-                            color: Colors.grey[800],
-                            fontSize: 15.0,
-                            // height: 1.5,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          ),
-            
-          ),
-          Container(
-            margin: EdgeInsets.all(2.0),
-            width: MediaQuery.of(context).size.width * 0.85,
-            child: 
-            Material(
-              elevation: 10.0,
-              shadowColor: Colors.grey,
-              child:TextFormField(
-              cursorColor: Colors.grey,
-              validator: (value) {
-                // if (value.isEmpty) {
-                //   return 'Please Enter Password';
-                // }
-                return null;
-              },
-              controller: email,
-              obscureText: false,
-              decoration: 
-              new InputDecoration(
-                isCollapsed: false,
-                filled: true,
-                fillColor: Colors.white,
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white, width: 0.0),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white, width: 0.0),
-                ),
-                 border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey, width: 1.0),
-                    borderRadius: BorderRadius.circular(15.0),
-                ),  
-                hintText: 'How old are you?',
-                hintStyle: TextStyle(
-                  color: Colors.grey,
-                ),
-              ),
-            ),),
-          ),
-          SizedBox(
-            height: 10.0,
-          ),
+
           Container(
             padding: EdgeInsets.only(left: 5,bottom: 5),
             child: Text("Email", style: TextStyle(
@@ -489,6 +458,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                     ),
                   ),
                   onPressed: () {
+                    getPdfAndUpload();
                     // Validate returns true if the form is valid, or false
                     // otherwise.
                     // if (_formKey.currentState.validate()) {
@@ -563,16 +533,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                     ),
                   ),
                   onPressed: () {
-                    // Validate returns true if the form is valid, or false
-                    // otherwise.
-                    // if (_formKey.currentState.validate()) {
-                    //   ProRegister(email.text, password.text);
-                    // }
-                    Navigator.pushReplacement(
-                      context,
-                      new MaterialPageRoute(
-                          builder: (context) => 
-                          new DoneRegister()));
+                    Register(fname.text,lname.text,email.text, password.text);
                   },
                   color: Color(0xFFef3131),
                   textColor: Colors.white,

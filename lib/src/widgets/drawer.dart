@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:healthnowapp/src/models/user.dart';
 import 'package:healthnowapp/src/models/wallet.dart';
 import 'package:healthnowapp/src/screens/login.dart';
+import 'package:healthnowapp/src/screens/orders.dart';
+import 'package:healthnowapp/src/screens/pro-orders.dart';
 import 'package:healthnowapp/src/screens/transactions.dart';
 // import 'package:healthnow/src/models/user.dart';
 // import 'package:healthnowapp/src/models/wallet.dart';
@@ -77,16 +79,27 @@ class MyDrawer extends StatelessWidget {
     final w = 'wallet';
     String wallet = pref.getString(w) ?? '0';
     String mywallet = wallet;
-    // User myuser = User.fromJson(jsonDecode(user));
+    User myuser = User.fromJson(jsonDecode(user));
     // convert to wallet first
-    // print(myuser);
-    // Navigator.push(
-    //     context,
-    //     new MaterialPageRoute(
-    //         builder: (context) => new OrdersScreen(
-    //               user: myuser,
-    //               wallet: mywallet,
-    //             )));
+    print(myuser);
+    if(myuser.isProfessional){
+      print("going to pro dashboard");
+      Navigator.push(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => new ProOrdersScreen(
+                  user: myuser,
+                  wallet: mywallet,
+                )));
+    }else{
+    Navigator.push(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => new OrdersScreen(
+                  user: myuser,
+                  wallet: mywallet,
+                )));
+    }
   }
 
   void transactions(context) async {

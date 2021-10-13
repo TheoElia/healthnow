@@ -3,28 +3,26 @@ class User {
   String username;
   String fullName;
   String password;
+  bool isProfessional;
 
-<<<<<<< HEAD
-  User({required this.username,required this.fullName, required this.password});
-=======
   User(
       {required this.id,
       required this.username,
       required this.fullName,
-      required this.phone,
-      required this.password});
->>>>>>> 4c655c8e72c7a6a076deed029cf1aafb4a5196dc
+      required this.password,
+      required this.isProfessional});
 
   factory User.fromJson(dynamic json) {
     return User(
         id: json['id'],
         username: json['username'] as String,
         fullName: json['full_name'] as String,
-        password: json['password'] as String);
+        password: json['password'] as String,
+        isProfessional: json['is_professional'] as bool);
   }
 
   @override
   String toString() {
-    return '{${this.username}, ${this.fullName}, ${this.password} }';
+    return '{${this.id},${this.username}, ${this.fullName}, ${this.password}, ${this.isProfessional} }';
   }
 }

@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:healthnowapp/src/data/data.dart';
+import 'package:healthnowapp/src/models/user.dart';
 import 'package:healthnowapp/src/screens/dashboard_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -16,14 +18,34 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+     whoIsUser();
     init();
   }
 
   init() async {
     getCategories().then((value) {
       finish(context);
-      DashBoard(categories: value).launch(context);
+      DashBoard(categories: value,isProfessional: userExists,).launch(context);
     });
+  }
+
+  whoIsUser() async{
+    final pref = await SharedPreferences.getInstance();
+    final u = 'user';
+    String user = pref.getString(u) ?? '0';
+    if(user != '0'){
+      User myuser = User.fromJson(jsonDecode(user));
+    setState(() {
+        if(myuser.isProfessional){
+          userExists = true;
+        }else{
+          userExists = false;
+        }
+          });
+    }else{
+      userExists = false;
+    }
+    
   }
 
   @override
