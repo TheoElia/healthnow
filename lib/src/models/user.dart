@@ -9,8 +9,12 @@ class User {
       {required this.id,
       required this.username,
       required this.fullName,
+<<<<<<< HEAD
       required this.password,
       required this.isProfessional});
+=======
+      required this.password});
+>>>>>>> 336e6c68b3e9a75d72c79d78c3c47cb91eb6c087
 
   factory User.fromJson(dynamic json) {
     return User(
