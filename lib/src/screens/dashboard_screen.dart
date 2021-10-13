@@ -208,11 +208,9 @@ class _DashBoardState extends State<DashBoard> {
             ],
           ),
         ),
-        
       ),
       drawer: ddrawer,
     );
-    
   }
 }
 
@@ -253,7 +251,6 @@ class _CategorieTileState extends State<CategorieTile> {
         ),
       ),
     );
-    
   }
 }
 
@@ -270,7 +267,6 @@ class SpecialistTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     
     return Container(
       width: 150,
       margin: EdgeInsets.only(right: 16),
@@ -308,60 +304,50 @@ class DoctorsTile extends StatelessWidget {
   const DoctorsTile({Key? key, required this.doctor}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => DoctorsInfo(
-                      doctor: doctor,
-                    )));
-      },
-      child: Container(
-        decoration: BoxDecoration(
-            color: Color(0xffFFEEE0), borderRadius: BorderRadius.circular(20)),
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 18),
-        child: Row(
-          children: <Widget>[
-            Image.network(
-              "https://healthnow.pywe.org${doctor.userImage}",
-              height: 50,
-            ),
-            SizedBox(
-              width: 17,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "${doctor.firstName}",
-                  style: TextStyle(color: Color(0xFFef3131), fontSize: 19),
-                ),
-                SizedBox(
-                  height: 2,
-                ),
-                Text(
-                  "${doctor.category.name}",
-                  style: TextStyle(fontSize: 15),
-                )
-              ],
-            ),
-            Spacer(),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 9),
-              decoration: BoxDecoration(
-                  color: Color(0xFFef3131),
-                  borderRadius: BorderRadius.circular(13)),
-              child: Text(
-                "View",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500),
+    return Container(
+      decoration: BoxDecoration(
+          color: Color(0xffFFEEE0), borderRadius: BorderRadius.circular(20)),
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 18),
+      child: Row(
+        children: <Widget>[
+          Image.network(
+            "https://healthnow.pywe.org${doctor.userImage}",
+            height: 50,
+          ),
+          SizedBox(
+            width: 17,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "${doctor.firstName}",
+                style: TextStyle(color: Color(0xFFef3131), fontSize: 19),
               ),
-            )
-          ],
-        ),
+              SizedBox(
+                height: 2,
+              ),
+              Text(
+                "${doctor.category.name}",
+                style: TextStyle(fontSize: 15),
+              )
+            ],
+          ),
+          Spacer(),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 9),
+            decoration: BoxDecoration(
+                color: Color(0xFFef3131),
+                borderRadius: BorderRadius.circular(13)),
+            child: Text(
+              "View",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500),
+            ),
+          )
+        ],
       ),
     );
   }

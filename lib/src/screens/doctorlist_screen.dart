@@ -4,6 +4,8 @@ import 'package:healthnowapp/src/data/data.dart';
 import 'package:healthnowapp/src/models/models.dart';
 import 'package:healthnowapp/src/screens/dashboard_screen.dart';
 import 'package:healthnowapp/src/screens/doctor_info_screen.dart';
+import 'package:healthnowapp/src/screens/login.dart';
+import 'package:healthnowapp/src/screens/register.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class DoctorList extends StatefulWidget {
@@ -62,9 +64,7 @@ class _DoctorListState extends State<DoctorList> {
                   children: doctors!.map((e) {
                     return GestureDetector(
                       onTap: () {
-                        DoctorsInfo(
-                          doctor: e,
-                        ).launch(context);
+                        checkRegistered(e);
                       },
                       child: DoctorsTile(
                         doctor: e,
@@ -75,5 +75,18 @@ class _DoctorListState extends State<DoctorList> {
         ),
       ),
     );
+  }
+
+  void checkRegistered(ProfessionalModel e) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt('category', e.category.id);
+    String? user = prefs.getString('user');
+    if (user == null) {
+      Register().launch(context);
+    } else {
+      DoctorsInfo(
+        doctor: e,
+      ).launch(context);
+    }
   }
 }

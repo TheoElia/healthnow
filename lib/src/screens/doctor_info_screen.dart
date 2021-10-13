@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:healthnowapp/src/models/models.dart';
 import 'package:healthnowapp/src/network/config.dart';
 import 'package:healthnowapp/src/screens/dashboard_screen.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 class DoctorsInfo extends StatefulWidget {
   final ProfessionalModel doctor;
@@ -13,6 +14,12 @@ class DoctorsInfo extends StatefulWidget {
 }
 
 class _DoctorsInfoState extends State<DoctorsInfo> {
+  var complaint = TextEditingController();
+
+  bool submitting = false;
+
+  bool autoValidate = false;
+  var formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +41,8 @@ class _DoctorsInfoState extends State<DoctorsInfo> {
               ),
               Row(
                 children: <Widget>[
-                  Image.asset( "$baseURL${widget.doctor.userImage}", height: 220),
+                  Image.network("$baseURL${widget.doctor.userImage}",
+                      height: 220),
                   SizedBox(
                     width: 20,
                   ),
@@ -96,7 +104,7 @@ class _DoctorsInfoState extends State<DoctorsInfo> {
                 height: 16,
               ),
               Text(
-                "Dr. Akua is a cardiologist in Accra & affiliated with multiple hospitals in the  area.He received his medical degree from University of Ghana School of Medicine and has been in practice for more than 90 years. ",
+                "${widget.doctor.about}",
                 style: TextStyle(color: Colors.grey, fontSize: 16),
               ),
               SizedBox(
@@ -187,11 +195,10 @@ class _DoctorsInfoState extends State<DoctorsInfo> {
               SizedBox(
                 height: 22,
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: <Widget>[
-                    Container(
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 24, horizontal: 16),
                       decoration: BoxDecoration(
@@ -210,9 +217,8 @@ class _DoctorsInfoState extends State<DoctorsInfo> {
                             width: 16,
                           ),
                           Container(
-                            width: MediaQuery.of(context).size.width / 2 - 130,
                             child: Text(
-                              "Rating\n 4.0",
+                              "Rating\n ${widget.doctor.rating}",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 17),
                             ),
@@ -220,12 +226,14 @@ class _DoctorsInfoState extends State<DoctorsInfo> {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      width: 16,
-                    ),
-                    Container(
+                  ),
+                  SizedBox(
+                    width: 3,
+                  ),
+                  Expanded(
+                    child: Container(
                       padding:
-                          EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+                          EdgeInsets.symmetric(vertical: 24, horizontal: 9),
                       decoration: BoxDecoration(
                           color: Color(0xffA5A5A5),
                           borderRadius: BorderRadius.circular(20)),
@@ -239,26 +247,125 @@ class _DoctorsInfoState extends State<DoctorsInfo> {
                                   borderRadius: BorderRadius.circular(16)),
                               child: Image.asset("assets/images/list.png")),
                           SizedBox(
-                            width: 16,
+                            width: 10,
                           ),
                           Container(
-                            width: MediaQuery.of(context).size.width / 2 - 130,
                             child: Text(
-                              "Reviews\n ${widget.doctor.appointments}",
+                              "Appointments\n ${widget.doctor.appointments}",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 17),
+                              textAlign: TextAlign.center,
                             ),
                           )
                         ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               )
             ],
           ),
         ),
       ),
+    );
+  }
+
+  appointmentForm(BuildContext aContext) {
+    showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      context: aContext,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20)),
+              ),
+              padding: EdgeInsets.all(16),
+              child: Form(
+                key: formKey,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "Book Appointment",
+                      style: boldTextStyle(),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16, bottom: 16),
+                      child: Divider(),
+                    ),
+                    SizedBox(height: 16),
+                    Text(
+                      "Reason",
+                      style: primaryTextStyle(),
+                    ),
+                    SizedBox(height: 8),
+                    Container(
+                      margin: EdgeInsets.all(2.0),
+                      child: TextFormField(
+                        minLines: 5,
+                        maxLines: 7,
+                        cursorColor: Colors.grey,
+                        autofocus: false,
+                        validator: (value) {
+                          return null;
+                        },
+                        controller: complaint,
+                        textCapitalization: TextCapitalization.sentences,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.fromLTRB(24, 16, 24, 16),
+                          hintText: "Your reason for booking the appointment",
+                          hintStyle: primaryTextStyle(color: Colors.grey),
+                          filled: true,
+                          fillColor: Colors.grey[200],
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                              borderSide: BorderSide(
+                                  color: Colors.grey[200]!, width: 1.0)),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                              borderSide: BorderSide(
+                                  color: Colors.grey[200]!, width: 1.0)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 30),
+                    !submitting
+                        ? GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              decoration: boxDecorationWithRoundedCorners(
+                                  backgroundColor: Color(0xFFef3131),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(16))),
+                              padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
+                              child: Center(
+                                child: Text("Book Appointment",
+                                    style: boldTextStyle(color: Colors.white)),
+                              ),
+                            ),
+                          )
+                        : Center(
+                            child: CircularProgressIndicator(
+                                color: Color(0xFFef3131)),
+                          ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
