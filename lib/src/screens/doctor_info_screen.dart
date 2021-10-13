@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:healthnowapp/src/data/data.dart';
 import 'package:healthnowapp/src/models/models.dart';
+import 'package:healthnowapp/src/models/user.dart';
 import 'package:healthnowapp/src/network/config.dart';
 import 'package:healthnowapp/src/screens/dashboard_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -65,29 +69,28 @@ class _DoctorsInfoState extends State<DoctorsInfo> {
                           height: 40,
                         ),
                         ButtonTheme(
-                minWidth: 200.0,
-                
-                child: RaisedButton(
-                  child: Text(
-                    'Book Appointment',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18.0,
-                      
-                    ),
-                  ),
-                  onPressed: () {
-                  },
-                  color: Color(0xFFef3131),
-                  textColor: Colors.white,
-                  padding: EdgeInsets.all(15),
-                  splashColor: Colors.grey,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    side: BorderSide(color: Color(0xFFef3131)),
-                  ),
-                ),
-                )
+                          minWidth: 200.0,
+                          child: RaisedButton(
+                            child: Text(
+                              'Book Appointment',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18.0,
+                              ),
+                            ),
+                            onPressed: () {
+                              appointmentForm(context);
+                            },
+                            color: Color(0xFFef3131),
+                            textColor: Colors.white,
+                            padding: EdgeInsets.all(15),
+                            splashColor: Colors.grey,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              side: BorderSide(color: Color(0xFFef3131)),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -341,7 +344,10 @@ class _DoctorsInfoState extends State<DoctorsInfo> {
                     SizedBox(height: 30),
                     !submitting
                         ? GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              makeRequest(complaint.text, widget.doctor.id,
+                                  widget.doctor.category.fee);
+                            },
                             child: Container(
                               width: MediaQuery.of(context).size.width,
                               decoration: boxDecorationWithRoundedCorners(
@@ -367,6 +373,14 @@ class _DoctorsInfoState extends State<DoctorsInfo> {
         );
       },
     );
+  }
+
+  void makeRequest(String text, int id, double fee) async {
+    final pref = await SharedPreferences.getInstance();
+    String? user = pref.getString('user');
+    User myuser = User.fromJson(jsonDecode(user!));
+    int userId = myuser.id;
+    sendRequest(text, id, fee, userId);
   }
 }
 
