@@ -28,7 +28,7 @@ class Webservice {
     final user = prefs.getString(key) ?? '0';
     User myuser = User.fromJson(jsonDecode(user));
     final response = await http.post(Uri.parse(resource.url),
-        headers: requestHeaders, body: jsonEncode({'phone': myuser.phone}));
+        headers: requestHeaders, body: jsonEncode({'username': myuser.username}));
     if (response.statusCode == 200) {
       return resource.parse(response);
     } else {

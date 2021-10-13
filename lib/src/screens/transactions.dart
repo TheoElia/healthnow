@@ -230,7 +230,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                               onPressed: () {
                                 var url =
                                     "https://healthnowapp.pywe.org/accounts/topup/" +
-                                        myuser.phone;
+                                        myuser.username;
                                 Navigator.of(context, rootNavigator: true)
                                     .pop();
                                 _launchURL(url);

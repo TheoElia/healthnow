@@ -42,7 +42,7 @@ class _DoctorsInfoState extends State<DoctorsInfo> {
               Row(
                 children: <Widget>[
                   Image.network("$baseURL${widget.doctor.userImage}",
-                      height: 220),
+                  height: 220,width: 150,),
                   SizedBox(
                     width: 20,
                   ),
