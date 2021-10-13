@@ -18,3 +18,12 @@ Future<List<ProfessionalModel>?> getCategoryDoctors(int categoryId) async {
   Iterable list = result['objects'];
   return list.map((model) => ProfessionalModel.fromJson(model)).toList();
 }
+
+Future<String?> sendRequest(String text, int id, double fee,int userId) async {
+  var body = {'problem': text,'patient':userId,'professional':id,'fee':fee};
+  var result = await handleResponse(
+      await postRequest('/api/v1/services/create-request/', body));
+
+  String message = result['message'];
+  return message;
+}
