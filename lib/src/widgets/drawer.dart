@@ -1,6 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:healthnowapp/src/models/user.dart';
+import 'package:healthnowapp/src/models/wallet.dart';
+import 'package:healthnowapp/src/screens/login.dart';
+import 'package:healthnowapp/src/screens/transactions.dart';
 // import 'package:healthnow/src/models/user.dart';
 // import 'package:healthnowapp/src/models/wallet.dart';
 // import 'package:healthnowapp/src/screens/account.dart';
@@ -92,17 +96,28 @@ class MyDrawer extends StatelessWidget {
     var user = pref.getString(u) ?? '0';
     final w = 'wallet';
     var wallet = pref.getString(w) ?? '0';
-    // Wallet mywallet = Wallet.fromJson(jsonDecode(wallet));
-    // User myuser = User.fromJson(jsonDecode(user));
-    // // convert to wallet first
+   
+    // convert to wallet first
     // print(myuser);
-    // Navigator.push(
-    //     context,
-    //     new MaterialPageRoute(
-    //         builder: (context) => new TransactionScreen(
-    //               user: myuser,
-    //               wallet: mywallet,
-    //             )));
+    // ignore: unrelated_type_equality_checks
+    if(wallet == "0"){
+      Navigator.push(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => new Login(
+                  
+                )));
+    }else{
+       Wallet mywallet = Wallet.fromJson(jsonDecode(wallet));
+    User myuser = User.fromJson(jsonDecode(user));
+    Navigator.push(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => new TransactionScreen(
+                  user: myuser,
+                  wallet: mywallet,
+                )));
+                }
   }
 
   @override
