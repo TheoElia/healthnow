@@ -4,10 +4,12 @@ import 'package:healthnowapp/src/data/data.dart';
 import 'package:healthnowapp/src/models/models.dart';
 import 'package:healthnowapp/src/screens/doctor_info_screen.dart';
 import 'package:healthnowapp/src/screens/doctorlist_screen.dart';
+import 'package:healthnowapp/src/screens/pro-register.dart';
 import 'package:healthnowapp/src/widgets/drawer.dart';
 import 'package:nb_utils/src/extensions/widget_extensions.dart';
 
 String selectedCategorie = "Adults";
+bool userExists = false;
 
 class DashBoard extends StatefulWidget {
   final List<CategoryModel>? categories;
@@ -57,28 +59,86 @@ class _DashBoardState extends State<DashBoard> {
               SizedBox(
                 height: 40,
               ),
-              // Container(
-              //   padding: EdgeInsets.symmetric(horizontal: 24),
-              //   height: 50,
-              //   decoration: BoxDecoration(
-              //       color: Color(0xffEFEFEF),
-              //       borderRadius: BorderRadius.circular(14)),
-              //   child: Row(
-              //     children: <Widget>[
-              //       Icon(Icons.search),
-              //       SizedBox(
-              //         width: 10,
-              //       ),
-              //       Text(
-              //         "Search",
-              //         style: TextStyle(color: Colors.grey, fontSize: 19),
-              //       )
-              //     ],
-              //   ),
-              // ),
-              // SizedBox(
-              //   height: 30,
-              // ),
+        userExists?Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            child: Center(
+              child: ButtonTheme(
+                minWidth: 300.0,
+                // ignore: deprecated_member_use
+                child: RaisedButton(
+                  child: Text(
+                    "Clients' Requests",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.0,
+                      // height: 1.0,
+                    ),
+                  ),
+                  onPressed: () {
+                    // Validate returns true if the form is valid, or false
+                    // otherwise.
+                    // if (_formKey.currentState.validate()) {
+                    //   ProRegister(email.text, password.text);
+                    // }
+                   Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => 
+                          new ProRegister()));
+                  },
+                  color: Color(0xFFef3131),
+                  textColor: Colors.white,
+                  padding: EdgeInsets.all(15),
+                  splashColor: Colors.grey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    side: BorderSide(color: Color(0xFFef3131)),
+                  ),
+                ),
+              ),
+            ),
+          ):Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            child: Center(
+              child: ButtonTheme(
+                minWidth: 300.0,
+                // ignore: deprecated_member_use
+                child: RaisedButton(
+                  child: Text(
+                    "Register As Specialist",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.0,
+                      // height: 1.0,
+                    ),
+                  ),
+                  onPressed: () {
+                    // Validate returns true if the form is valid, or false
+                    // otherwise.
+                    // if (_formKey.currentState.validate()) {
+                    //   ProRegister(email.text, password.text);
+                    // }
+                   Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => 
+                          new ProRegister()));
+                  },
+                  color: Color(0xFFef3131),
+                  textColor: Colors.white,
+                  padding: EdgeInsets.all(15),
+                  splashColor: Colors.grey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    side: BorderSide(color: Color(0xFFef3131)),
+                  ),
+                ),
+              ),
+            ),
+          ),
+              SizedBox(
+                height: 30,
+              ),
               Text(
                 "Categories",
                 style: TextStyle(
@@ -133,17 +193,17 @@ class _DashBoardState extends State<DashBoard> {
               SizedBox(
                 height: 20,
               ),
-              Text(
-                "Recent Appointment",
-                style: TextStyle(
-                    color: Colors.black87.withOpacity(0.8),
-                    fontSize: 25,
-                    fontWeight: FontWeight.w600),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text('Most recent appointment shows here',style: TextStyle(fontSize: 17,color: Colors.grey),)
+              // Text(
+              //   "Recent Appointment",
+              //   style: TextStyle(
+              //       color: Colors.black87.withOpacity(0.8),
+              //       fontSize: 25,
+              //       fontWeight: FontWeight.w600),
+              // ),
+              // SizedBox(
+              //   height: 20,
+              // ),
+              // Text('Most recent appointment shows here',style: TextStyle(fontSize: 17,color: Colors.grey),)
               // DoctorsTile(doctor: null,)
             ],
           ),

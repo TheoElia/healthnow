@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:healthnowapp/src/screens/chatscreen.dart';
 import 'package:healthnowapp/src/screens/dashboard_screen.dart';
+import 'package:healthnowapp/src/screens/doctorlist_screen.dart';
 import 'package:healthnowapp/src/screens/login.dart';
 import 'dart:convert';
 import 'package:http/http.dart';
@@ -92,14 +93,15 @@ class MyCustomFormState extends State<MyCustomForm> {
   // Note: This is a GlobalKey<FormState>,
   // not a GlobalKey<MyCustomFormState>.
 
-  void Register(email, password) async {
+  void Register(fname,lname,age,email, password) async {
     showLoaderDialog(context, "Please wait...");
     final pref = await SharedPreferences.getInstance();
-    final k = 'uuid';
+    final k = 'token';
+    final c = 'category';
     final myuid = pref.getString(k) ?? '0';
-    final number = "233" + email;
-    print(number);
-    print(password);
+    final cat = pref.getInt(c) ?? 0;
+    // print(number);
+    // print(password);
     Map<String, String> requestHeaders = {
       // 'Content-type': 'application/json',
       'Accept': 'application/json',
@@ -108,30 +110,28 @@ class MyCustomFormState extends State<MyCustomForm> {
     };
 
     Response response =
-        await post(Uri(),
+        await post(Uri.parse('https://healthnow.pywe.org/api/v1/accounts/create-user/'),
             headers: requestHeaders,
             body: jsonEncode({
-              'phone': number,
+              'first_name': fname,
+              'last_name': lname,
+              'age': age,
+              'email': email,
               'password': password,
-              'refer': ''
-              // "FireBaseKey": "37473483743874",
+              'notification_token':myuid,
             }));
     print(response.body);
     Map data = jsonDecode(response.body);
     print(data);
     if (data['success']) {
       var user = data['user']['user'];
-      var settings = data['user']['settings'];
-      var profile = data['user']['profile'];
       var wallet = data['user']['wallet'];
       _saveObj('user', jsonEncode(user));
-      _saveObj('settings', jsonEncode(settings));
-      _saveObj('profile', jsonEncode(profile));
       _saveObj('wallet', jsonEncode(wallet));
       print(data);
-      // Navigator.pushReplacement(
-      //     context, new MaterialPageRoute(builder: (context) => Delivery()
-      //     ));
+      Navigator.pushReplacement(
+          context, new MaterialPageRoute(builder: (context) => DoctorList(categoryId:cat,)
+          ));
     } else {
       Navigator.of(context, rootNavigator: true).pop();
       showDialog(
@@ -181,6 +181,9 @@ class MyCustomFormState extends State<MyCustomForm> {
   // of the TextField.
   final email = TextEditingController();
   final password = TextEditingController();
+  final fname = TextEditingController();
+  final lname = TextEditingController();
+  final age = TextEditingController();
   final countryCode = "233";
 
   @override
@@ -221,7 +224,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                 // }
                 return null;
               },
-              controller: email,
+              controller: fname,
               obscureText: false,
               decoration: 
               new InputDecoration(
@@ -274,7 +277,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                 // }
                 return null;
               },
-              controller: email,
+              controller: lname,
               obscureText: false,
               decoration: 
               new InputDecoration(
@@ -327,7 +330,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                 // }
                 return null;
               },
-              controller: email,
+              controller: age,
               obscureText: false,
               decoration: 
               new InputDecoration(
@@ -493,11 +496,13 @@ class MyCustomFormState extends State<MyCustomForm> {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      new MaterialPageRoute(
-                          builder: (context) => 
-                          new DashBoard(categories: [],)));
+                    // Navigator.pushReplacement(
+                    //   context,
+                    //   new MaterialPageRoute(
+                    //       builder: (context) => 
+                    //       new DashBoard(categories: [
+
+                    //       ],)));
                     //  Navigator.pushReplacement(
                     //   context,
                     //   new MaterialPageRoute(
@@ -506,7 +511,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                     // Validate returns true if the form is valid, or false
                     // otherwise.
                     // if (_formKey.currentState.validate()) {
-                    //   Register(email.text, password.text);
+                      Register(fname.text,lname.text,age.text,email.text, password.text);
                     // }
                   },
                   color: Color(0xFFef3131),

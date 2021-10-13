@@ -196,7 +196,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       children: <Widget>[
                         Align(
                           child: Text(
-                            'Food Wallet',
+                            'Appoitment Wallet',
                             style: boldTextStyle(
                                 size: 20, textColor: Colors.white,letterSpacing: 2,wordSpacing: 2),
                           ),

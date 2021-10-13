@@ -57,7 +57,7 @@ class _DoctorsInfoState extends State<DoctorsInfo> {
                           height: 40,
                         ),
                         ButtonTheme(
-                minWidth: 100.0,
+                minWidth: 200.0,
                 
                 child: RaisedButton(
                   child: Text(
@@ -78,7 +78,8 @@ class _DoctorsInfoState extends State<DoctorsInfo> {
                     borderRadius: BorderRadius.circular(10.0),
                     side: BorderSide(color: Color(0xFFef3131)),
                   ),
-                ),)
+                ),
+                )
                       ],
                     ),
                   ),
