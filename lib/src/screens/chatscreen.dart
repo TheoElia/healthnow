@@ -167,7 +167,7 @@ class _ChatScreenState extends State<ChatScreen> {
               itemCount: msgListing.length,
               padding: EdgeInsets.only(top: 8, left: 8, right: 8, bottom: 70),
               itemBuilder: (_, index) {
-                MessageModel data = msgListing[index];
+                MessageModel data = msgListing.reversed.toList()[index];
                 var isMe = data.senderId == widget.senderId;
                 print(isMe);
                 return ChatMessageWidget1(isMe: isMe, data: data);

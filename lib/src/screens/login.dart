@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:healthnowapp/src/models/user.dart';
 import 'package:healthnowapp/src/screens/choice.dart';
 import 'package:healthnowapp/src/screens/dashboard_screen.dart';
 import 'package:healthnowapp/src/screens/doctorlist_screen.dart';
+import 'package:healthnowapp/src/screens/orders.dart';
+import 'package:healthnowapp/src/screens/pro-orders.dart';
 import 'package:healthnowapp/src/screens/register.dart';
 import 'dart:convert';
 import 'package:http/http.dart';
@@ -126,9 +129,21 @@ class MyCustomFormState extends State<MyCustomForm> {
       // _saveObj('profile', jsonEncode(profile));
       _saveObj('wallet', jsonEncode(wallet));
       print(data);
-      Navigator.pushReplacement(
+      if(user['is_professional']){
+        if(cat == 0)
+        {
+          goToDashboard();
+        }
+      }else{
+        if(cat == 0)
+        {
+           toDashboard();
+        }else{
+          Navigator.pushReplacement(
           context, new MaterialPageRoute(builder: (context) => DoctorList(categoryId:cat,)
           ));
+          }
+          }
     } else {
       Navigator.of(context, rootNavigator: true).pop();
       showDialog(
@@ -138,6 +153,38 @@ class MyCustomFormState extends State<MyCustomForm> {
           });
       
     }
+  }
+
+  goToDashboard() async{
+    final pref = await SharedPreferences.getInstance();
+    final u = 'user';
+    String user = pref.getString(u) ?? '0';
+    final w = 'wallet';
+    String wallet = pref.getString(w) ?? '0';
+    String mywallet = wallet;
+    User myuser = User.fromJson(jsonDecode(user));
+    Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => 
+                          new ProOrdersScreen(user: myuser,wallet: mywallet,)));
+  }
+
+  toDashboard() async{
+    final pref = await SharedPreferences.getInstance();
+    final u = 'user';
+    String user = pref.getString(u) ?? '0';
+    final w = 'wallet';
+    String wallet = pref.getString(w) ?? '0';
+    String mywallet = wallet;
+    User myuser = User.fromJson(jsonDecode(user));
+    Navigator.push(
+        context,
+        new MaterialPageRoute(
+            builder: (context) => new OrdersScreen(
+                  user: myuser,
+                  wallet: mywallet,
+                )));
   }
 
   showLoaderDialog(BuildContext context, text) {
