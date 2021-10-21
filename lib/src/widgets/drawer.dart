@@ -79,7 +79,7 @@ class MyDrawer extends StatelessWidget {
     final w = 'wallet';
     String wallet = pref.getString(w) ?? '0';
     String mywallet = wallet;
-    User myuser = User.fromJson(jsonDecode(user));
+    User myuser = User.fromJson(user);
     // convert to wallet first
     print(myuser);
     if(myuser.isProfessional){

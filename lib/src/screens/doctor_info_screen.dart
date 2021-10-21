@@ -381,11 +381,11 @@ class _DoctorsInfoState extends State<DoctorsInfo> {
     showLoaderDialog(context, "Please wait...");
     final pref = await SharedPreferences.getInstance();
     String? user = pref.getString('user');
-    User myuser = User.fromJson(jsonDecode(user!));
+    User myuser = User.fromJson(user!);
     final w = 'wallet';
     String wallet = pref.getString(w) ?? '0';
     String mywallet = wallet;
-    int userId = myuser.id;
+    String userId = myuser.username;
     print(fee);
     print(id);
     print(text);

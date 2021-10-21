@@ -26,7 +26,7 @@ class Webservice {
     final prefs = await SharedPreferences.getInstance();
     final key = 'user';
     final user = prefs.getString(key) ?? '0';
-    User myuser = User.fromJson(jsonDecode(user));
+    User myuser = User.fromJson(user);
     final response = await http.post(Uri.parse(resource.url),
         headers: requestHeaders, body: jsonEncode({'username': myuser.username}));
     if (response.statusCode == 200) {
