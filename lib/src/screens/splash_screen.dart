@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
     final u = 'user';
     String user = pref.getString(u) ?? '0';
     if(user != '0'){
-      User myuser = User.fromJson(jsonDecode(user));
+      User myuser = User.fromJson(user);
     setState(() {
         if(myuser.isProfessional){
           userExists = true;
