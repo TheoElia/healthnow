@@ -370,7 +370,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                                         context,
                                                         new MaterialPageRoute(
                                                             builder: (context) =>
-                                                                new ChatScreen(img: 'assets/images/img1.png',name: 'My Doctor',senderId: 12,receiverId: orders[index]['patient'],meetingLink:orders[index]['meeting_link'])));
+                                                                new ChatScreen(img: 'assets/images/img1.png',name: 'My Doctor',senderId: orders[index]['patient_username'],receiverId: orders[index]['professional_username'],meetingLink:orders[index]['meeting_link'])));
                                                   }),
                                             )
                                         ],

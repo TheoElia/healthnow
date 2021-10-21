@@ -5,6 +5,8 @@ class Order {
   String id;
   String message;
   int patient;
+  String patientUsername;
+  String proUsername;
   double fee;
   bool paid;
   bool accepted;
@@ -20,6 +22,8 @@ class Order {
       {required this.id,
       required this.message,
       required this.patient,
+      required this.patientUsername,
+      required this.proUsername,
       required this.fee,
       required this.paid,
       required this.accepted,
@@ -35,6 +39,8 @@ class Order {
         id: json['id'] as String,
         message: json['message'] as String,
         patient: json['patient'] as int,
+        patientUsername: json['patient_username'] as String,
+        proUsername: json['professional_username'] as String,
         fee: json['consultation_fee'] as double,
         paid: json['paid'] as bool,
         accepted: json['accepted'] as bool,
@@ -64,6 +70,6 @@ class Order {
 
   @override
   String toString() {
-    return '{${this.id}, ${this.id}, ${this.patient}, ${this.paid}, ${this.fee},${this.paid},${this.accepted},${this.declined},${this.attendedTo},${this.review},${this.status},${this.meetingLink},${this.message},${this.rating} }';
+    return '{${this.id}, ${this.id}, ${this.patient}, ${this.patientUsername},${this.proUsername}, ${this.paid}, ${this.fee},${this.paid},${this.accepted},${this.declined},${this.attendedTo},${this.review},${this.status},${this.meetingLink},${this.message},${this.rating} }';
   }
 }

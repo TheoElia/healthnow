@@ -9,8 +9,8 @@ import 'package:url_launcher/url_launcher.dart';
 class ChatScreen extends StatefulWidget {
   final String img;
   final String name;
-  final int senderId;
-  final int receiverId;
+  final String senderId;
+  final String receiverId;
   final String meetingLink;
 
   const ChatScreen({
@@ -40,12 +40,26 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   init() async {
-    Timer(Duration(seconds: 2), () async {
-      var newMsg = await getNewMsg(widget.senderId);
+    // Timer(Duration(seconds: 2), () async {
+    //   var newMsg = await getNewMsg(widget.senderId,widget.receiverId);
+    //   for (var msg in newMsg!) {
+    //     print(msg.receiverId);
+    //     setState(() {
+    //       msgListing.insert(0, msg);
+    //     });
+        
+    //   }
+    // });
+    Timer.periodic(new Duration(seconds: 3), (timer)  async{
+   var newMsg = await getNewMsg(widget.senderId,widget.receiverId);
       for (var msg in newMsg!) {
-        msgListing.insert(0, msg);
+        print(msg.receiverId);
+        setState(() {
+          msgListing.insert(0, msg);
+        });
+        
       }
-    });
+});
   }
 
   @override
@@ -55,13 +69,14 @@ class _ChatScreenState extends State<ChatScreen> {
 
   sendClick() async {
     DateFormat formatter = DateFormat('hh:mm a');
-
+    // init();
     if (msgController.text.trim().isNotEmpty) {
       var msgModel = MessageModel(
           msg: msgController.text.toString(),
           receiverId: widget.receiverId,
           senderId: widget.senderId,
-          time: formatter.format(DateTime.now()));
+          // time: formatter.format(DateTime.now())
+          );
       hideKeyboard(context);
       msgListing.insert(0, msgModel);
       sendMessage(
@@ -119,7 +134,7 @@ class _ChatScreenState extends State<ChatScreen> {
         actions: [
           GestureDetector(child:Padding(
               padding: EdgeInsets.only(right: 16),
-              child: Icon(Icons.video_call, color: Colors.black, size: 20)),onTap: () {
+              child: Icon(Icons.video_call, color: Colors.black, size: 25)),onTap: () {
               launch("${widget.meetingLink}");
           })
         ],
@@ -139,7 +154,7 @@ class _ChatScreenState extends State<ChatScreen> {
               itemBuilder: (_, index) {
                 MessageModel data = msgListing[index];
                 var isMe = data.senderId == widget.senderId;
-
+                print(isMe);
                 return ChatMessageWidget1(isMe: isMe, data: data);
                 //return ChatMessageWidget(isMe: isMe, data: data);
               },
@@ -258,9 +273,11 @@ class ChatMessageWidget1 extends StatelessWidget {
                   child: Text(data.msg.toString(),
                       style: TextStyle(
                           color: !isMe ? Colors.white : Colors.black))),
-              Text(data.time.toString(),
-                  style: TextStyle(
-                      color: !isMe ? Colors.white : Colors.grey, fontSize: 12))
+              // Text(
+              //   data.time.toString(),
+              //     style: TextStyle(
+              //         color: !isMe ? Colors.white : Colors.grey, fontSize: 12)
+              //         )
             ],
           ),
         ),

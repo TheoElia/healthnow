@@ -30,8 +30,8 @@ Future<bool?> sendRequest(String text, int id, double fee,int userId) async {
   return success;
 }
 
-Future<String?> sendMessage(int senderId, int recipientId, String msg) async {
-  var body = {'sender_id': senderId ?? 13, 'recipient_id':recipientId, 'message':msg};
+Future<String?> sendMessage(String senderId, String recipientId, String msg) async {
+  var body = {'sender_id': senderId, 'recipient_id':recipientId, 'message':msg};
   var result = await handleResponse(
       await postRequest('/api/v1/services/create-message/', body));
 
@@ -39,11 +39,10 @@ Future<String?> sendMessage(int senderId, int recipientId, String msg) async {
   return message;
 }
 
-Future<List<MessageModel>?> getNewMsg(senderId) async {
-  var body = {'id': senderId ?? 13};
+Future<List<MessageModel>?> getNewMsg(senderId,recipientId) async {
+  var body = {'receiver': senderId,'sender':recipientId};
   var result = await handleResponse(
       await postRequest('/api/v1/services/read-message/', body));
-
   Iterable list = result['objects'];
   return list.map((model) => MessageModel.fromJson(model)).toList();
 }

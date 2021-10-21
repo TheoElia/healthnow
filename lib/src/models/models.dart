@@ -120,28 +120,28 @@ class ProfessionalModel {
 
 
 class MessageModel {
-  int senderId;
-  int receiverId;
+  String senderId;
+  String receiverId;
   String msg;
-  String time;
+  // String time;
 
-  MessageModel({required this.senderId, required this.receiverId, required this.msg, required this.time});
+  MessageModel({required this.senderId, required this.receiverId, required this.msg});
 
   Map<String, dynamic> toMap() {
     return {
       'senderId': senderId,
       'receiverId': receiverId,
       'msg': msg,
-      'time': time,
+      // 'time': time,
     };
   }
 
   factory MessageModel.fromMap(Map<String, dynamic> map) {
     return MessageModel(
-      senderId: map['senderId'],
-      receiverId: map['receiverId'],
-      msg: map['msg'],
-      time: map['time'],
+      senderId: map['sender'],
+      receiverId: map['recipient'],
+      msg: map['message'],
+      // time: map['time'],
     );
   }
 

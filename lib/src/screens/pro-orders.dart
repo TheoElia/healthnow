@@ -179,7 +179,7 @@ class _ProOrdersScreenState extends State<ProOrdersScreen> {
         await post(Uri.parse('https://healthnow.pywe.org/api/v1/services/update-request/'),
             headers: requestHeaders,
             body: jsonEncode({
-              'meeting_link': link,
+              'meeting_link': "https://"+link,
               'id': id,
               'accepted':act
             }));
@@ -252,7 +252,31 @@ class _ProOrdersScreenState extends State<ProOrdersScreen> {
                     Padding(
                       padding: const EdgeInsets.only(top: 10, bottom: 10),
                       child: Divider(),
-                    ),  
+                    ), 
+                    Text(
+                      "Create and copy a new meeting link using the button below and paste the link in the box",
+                      style: primaryTextStyle(),
+                    ),
+                     SizedBox(height: 5,),
+                    GestureDetector(
+                            onTap: () {
+                              launch("https://meet.google.com");
+                              // makeRequest(meeting_link.text,id,true);
+                            },
+                            child: Container(
+                              width: MediaQuery.of(context).size.width*0.9,
+                              decoration: boxDecoration(
+                                  backGroundColor: Color(0xFF4caf50),
+                                  radius: 16),
+                              padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
+                              child: Center(
+                                child: Text("Create New Meeting",
+                                    style:
+                                        boldTextStyle(textColor: Colors.white,letterSpacing: 2,wordSpacing: 2)),
+                              ),
+                            ),
+                          ), 
+                     SizedBox(height: 10,),
                     Text(
                       "Meeting Link",
                       style: primaryTextStyle(),
@@ -272,7 +296,7 @@ class _ProOrdersScreenState extends State<ProOrdersScreen> {
                         textCapitalization: TextCapitalization.sentences,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.fromLTRB(24, 16, 24, 16),
-                          hintText: "Enter meeting link here",
+                          hintText: "Paste meeting link here",
                           hintStyle: primaryTextStyle(textColor: Colors.grey),
                           filled: true,
                           fillColor: Colors.grey[200],
@@ -288,10 +312,6 @@ class _ProOrdersScreenState extends State<ProOrdersScreen> {
                         ),
                       ),
                     ),                 
-                    // Text(
-                    //   "Post pills like the Lydia contraceptive should not be taken more than twice in one month.",
-                    //   style: primaryTextStyle(),
-                    // ),
                     
                     SizedBox(height: 30),
                     Row(children: [
@@ -464,11 +484,11 @@ class _ProOrdersScreenState extends State<ProOrdersScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: <Widget>[
-                                          Text(
-                                            '${orders[index]['status']}',
-                                            style:
-                                                TextStyle(color: Colors.grey),
-                                          ),
+                                          // Text(
+                                          //   '${orders[index]['status']}',
+                                          //   style:
+                                          //       TextStyle(color: Colors.grey),
+                                          // ),
                                           Container(
                                             width: MediaQuery.of(context).size.width*0.3,
                                             child: Text(
@@ -532,7 +552,7 @@ class _ProOrdersScreenState extends State<ProOrdersScreen> {
                                                         context,
                                                         new MaterialPageRoute(
                                                             builder: (context) =>
-                                                                new ChatScreen(img: 'assets/images/img1.png',name: 'My Client',senderId: widget.user.id,receiverId: orders[index]['patient'],meetingLink:orders[index]['meeting_link'])));
+                                                                new ChatScreen(img: 'assets/images/img1.png',name: 'My Client',senderId: orders[index]['professional_username'],receiverId: orders[index]['patient_username'],meetingLink:orders[index]['meeting_link'])));
                                                     
                                                   }),
                                             )
