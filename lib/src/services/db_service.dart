@@ -8,15 +8,9 @@ import 'package:path/path.dart';
 class DBProvider {
   DBProvider._();
   static final DBProvider db = DBProvider._();
-  late final Database _database;
+  
 
-  Future<Database> get database async {
-    if (_database != null) return _database;
-    _database = await _open();
-    return _database;
-  }
-
-  Future _open() async {
+ Future<Database?>  open() async {
     print("creating db");
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "healthnow1.db");
@@ -29,9 +23,9 @@ class DBProvider {
   }
 
   Future<void> insertChat(MessageModel message) async {
-    final Database db = await database;
+   final Database? db = await open();
 
-    await db.insert(
+    await db!.insert(
       'messages',
       message.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
@@ -39,10 +33,10 @@ class DBProvider {
   }
 
   Future<List<MessageModel>> getChats() async {
-    final Database db = await database;
+    final Database? db = await open();
 
     // Query the table for all The Chat.
-    final List<Map<String, dynamic>> maps = await db.query('messages');
+    final List<Map<String, dynamic>> maps = await db!.query('messages');
 
     // Convert the List<Map<String, dynamic> into a List<Chat>.
     return List.generate(maps.length, (i) {
@@ -56,8 +50,8 @@ class DBProvider {
   }
 
   Future<void> updateMessage(MessageModel message) async {
-    final db = await database;
-    await db.update(
+     final Database? db = await open();
+    await db!.update(
       'messages',
       message.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
@@ -69,8 +63,8 @@ class DBProvider {
   }
 
   Future<void> clearDatabase() async {
-    final db = await database;
-    await db.rawQuery("DELETE FROM chats");
+     final Database? db = await open();
+    await db!.rawQuery("DELETE FROM chats");
   }
 
 }
