@@ -4,29 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:healthnowapp/src/data/data.dart';
 import 'package:healthnowapp/src/models/models.dart';
 import 'package:intl/intl.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-class ChatScreen extends StatefulWidget {
+class PatientChatScreen extends StatefulWidget {
   final String img;
   final String name;
   final int senderId;
   final int receiverId;
-  final String meetingLink;
 
-  const ChatScreen({
+  const PatientChatScreen({
     Key? key,
     required this.img,
     required this.name,
     required this.senderId,
-    required this.receiverId,
-    required this.meetingLink,
+    required this.receiverId
   }) : super(key: key);
 
   @override
-  _ChatScreenState createState() => _ChatScreenState();
+  _PatientChatScreenState createState() => _PatientChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _PatientChatScreenState extends State<PatientChatScreen> {
   ScrollController scrollController = ScrollController();
   TextEditingController msgController = TextEditingController();
   FocusNode msgFocusNode = FocusNode();
@@ -117,11 +114,9 @@ class _ChatScreenState extends State<ChatScreen> {
           ],
         ),
         actions: [
-          GestureDetector(child:Padding(
+          Padding(
               padding: EdgeInsets.only(right: 16),
-              child: Icon(Icons.video_call, color: Colors.black, size: 20)),onTap: () {
-              launch("${widget.meetingLink}");
-          })
+              child: Icon(Icons.call, color: Colors.black, size: 20))
         ],
       ),
       body: Stack(
@@ -166,7 +161,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       textInputAction: TextInputAction.done,
                       decoration: InputDecoration.collapsed(
                         hintText: personName.isNotEmpty
-                            ? 'Write here'
+                            ? 'Write to Riri'
                             : 'Type a something...',
                         hintStyle: TextStyle(color: Colors.white),
                       ),

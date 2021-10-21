@@ -2,10 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-import 'package:healthnowapp/src/data/data.dart';
 import 'package:healthnowapp/src/models/models.dart';
 import 'package:healthnowapp/src/models/user.dart';
-import 'package:healthnowapp/src/screens/doctor_info_screen.dart';
 import 'package:healthnowapp/src/screens/doctorlist_screen.dart';
 import 'package:healthnowapp/src/screens/pro-orders.dart';
 import 'package:healthnowapp/src/screens/pro-register.dart';

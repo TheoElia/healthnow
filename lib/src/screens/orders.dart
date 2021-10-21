@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:healthnowapp/src/screens/chatscreen.dart';
 import 'package:http/http.dart';
 import 'package:healthnowapp/src/models/order.dart';
 import 'package:healthnowapp/src/models/user.dart';
@@ -360,22 +361,16 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                                   ),
                                                   color: Color(0xFFef3131),
                                                   child: Text(
-                                                    'Receipt',
+                                                    'Access',
                                                     style: TextStyle(
                                                         color: Colors.white),
                                                   ),
                                                   onPressed: () {
-                                                    // Navigator.push(
-                                                    //     context,
-                                                    //     new MaterialPageRoute(
-                                                    //         builder: (context) =>
-                                                    //             new OrderReceipt(
-                                                    //                 user:
-                                                    //                     myuser,
-                                                    //                 wallet:
-                                                    //                     mywallet,
-                                                    //                 order: orders[
-                                                    //                     index])));
+                                                    Navigator.push(
+                                                        context,
+                                                        new MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                new ChatScreen(img: 'assets/images/img1.png',name: 'My Doctor',senderId: 12,receiverId: orders[index]['patient'],meetingLink:orders[index]['meeting_link'])));
                                                   }),
                                             )
                                         ],

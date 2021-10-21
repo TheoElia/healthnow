@@ -164,6 +164,189 @@ class _ProOrdersScreenState extends State<ProOrdersScreen> {
       // Navigator.pushReplacement(context,new MaterialPageRoute(builder: (context) => new SetPin(text: phone,)));
     }
   }
+   void makeRequest(link,id,act) async {
+    showLoaderDialog(context, "Updating the request...");
+    final pref = await SharedPreferences.getInstance();
+    final String k = 'uuid';
+    final String myuid = pref.getString(k) ?? '0';
+    // final String number = myphone.toString();
+    print(myuid);
+    Map<String, String> requestHeaders = {
+      'Accept': 'application/json',
+    };
+
+    Response response =
+        await post(Uri.parse('https://healthnow.pywe.org/api/v1/services/update-request/'),
+            headers: requestHeaders,
+            body: jsonEncode({
+              'meeting_link': link,
+              'id': id,
+              'accepted':act
+            }));
+    print(response.body);
+    Map data = jsonDecode(response.body);
+    print(data);
+    if (data['success']) {   
+      print(data);
+      Navigator.of(context).pop();
+
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(content: Text("Request has been sent!"));
+          });
+      // setState(() {
+      //   submitting = false;
+      // });
+    } else {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(content: Text(data['message']));
+          });
+      // Navigator.pushReplacement(context,new MaterialPageRoute(builder: (context) => new SetPin(text: phone,)));
+    }
+  }
+  acceptOrDecline(BuildContext aContext,id) {
+    
+  var meeting_link = TextEditingController();
+  var phone = TextEditingController();
+  var consult_phone = TextEditingController();
+  var complaint = TextEditingController();
+
+  var signature = TextEditingController();
+  var formKey = GlobalKey<FormState>();
+    showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      context: aContext,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20)),
+              ),
+              padding: EdgeInsets.all(16),
+              child: Form(
+                key: formKey,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "Accept or Decline This Request",
+                      style: boldTextStyle(letterSpacing: 2,wordSpacing: 2),
+                    ),
+                    SizedBox(height: 10,),
+                    Text(
+                      "Enter a google meet link in the box below if you choose to accept the request",
+                      style: primaryTextStyle(),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, bottom: 10),
+                      child: Divider(),
+                    ),  
+                    Text(
+                      "Meeting Link",
+                      style: primaryTextStyle(),
+                    ),
+                    SizedBox(height: 5),
+                    Container(
+                      margin: EdgeInsets.all(2.0),
+                      child: TextFormField(
+                        minLines: 5,
+                        maxLines: 7,
+                        cursorColor: Colors.grey,
+                        autofocus: false,
+                        validator: (value) {
+                          return null;
+                        },
+                        controller: meeting_link,
+                        textCapitalization: TextCapitalization.sentences,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.fromLTRB(24, 16, 24, 16),
+                          hintText: "Enter meeting link here",
+                          hintStyle: primaryTextStyle(textColor: Colors.grey),
+                          filled: true,
+                          fillColor: Colors.grey[200],
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                              borderSide: BorderSide(
+                                  color: Colors.grey, width: 1.0)
+                                  ),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                              borderSide: BorderSide(
+                                  color: Colors.grey, width: 1.0)),
+                        ),
+                      ),
+                    ),                 
+                    // Text(
+                    //   "Post pills like the Lydia contraceptive should not be taken more than twice in one month.",
+                    //   style: primaryTextStyle(),
+                    // ),
+                    
+                    SizedBox(height: 30),
+                    Row(children: [
+                      GestureDetector(
+                            onTap: () {
+                              // launch("https://wa.me/233500459013?text=Hello%20%20Josefina,I%20need%20help%20with%20Pharst%20Care.%20");
+                              makeRequest(meeting_link.text,id,true);
+                            },
+                            child: Container(
+                              width: MediaQuery.of(context).size.width*0.4,
+                              decoration: boxDecoration(
+                                  backGroundColor: Color(0xFF4caf50),
+                                  radius: 16),
+                              padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
+                              child: Center(
+                                child: Text("Accept",
+                                    style:
+                                        boldTextStyle(textColor: Colors.white,letterSpacing: 2,wordSpacing: 2)),
+                              ),
+                            ),
+                          ),
+                        
+                          SizedBox(width:MediaQuery.of(context).size.width * 0.1 ,),
+                       GestureDetector(
+                            onTap: () {
+                            //  launch("tel:0554813575"); 
+                            makeRequest("",id,false);  
+                            },
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              decoration: boxDecoration(
+                                  backGroundColor: Color(0xFF007BFF),
+                                  radius: 16),
+                              padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
+                              child: Center(
+                                child: Text("Decline",
+                                    style:
+                                        boldTextStyle(textColor: Colors.white, letterSpacing: 2, wordSpacing: 2)),
+                              ),
+                            ),
+                          )
+                        
+                    ],)
+                    
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -319,30 +502,8 @@ class _ProOrdersScreenState extends State<ProOrdersScreen> {
                                                         color: Colors.white),
                                                   ),
                                                   onPressed: () {
-                                                    if (orders[index]
-                                                            ['consultation_fee'] <=
-                                                        mywallet.serviceAccount) {
-                                                      // we can charge the user
-                                                      var form = {
-                                                        "username":
-                                                            widget.user.username,
-                                                        "total_charge":
-                                                            orders[index]['consultation_fee'],
-                                                        "order_number":
-                                                            orders[index]['id']
-                                                      };
-                                                      print(form);
-                                                      chargeUser(form);
-                                                    } else {
-                                                      // the person has to topup
-                                                      var url =
-                                                          "https://healthnow.pywe.org/accounts/topup/" +
-                                                              widget.user.id.toString();
-                                                      Navigator.of(context,
-                                                              rootNavigator:
-                                                                  true)
-                                                          .pop();
-                                                      _launchURL(url);
+                                                    if(orders[index]['status'] == "accepted" || orders[index]['status'] == "declined"){}else{
+                                                    acceptOrDecline(context,orders[index]['id']);
                                                     }
                                                   }),
                                             ),
@@ -366,11 +527,12 @@ class _ProOrdersScreenState extends State<ProOrdersScreen> {
                                                         color: Colors.white),
                                                   ),
                                                   onPressed: () {
+                                                    print(widget.user.id);
                                                     Navigator.push(
                                                         context,
                                                         new MaterialPageRoute(
                                                             builder: (context) =>
-                                                                new ChatScreen(img: 'assets/images/img1.png',name: 'Kofi',)));
+                                                                new ChatScreen(img: 'assets/images/img1.png',name: 'My Client',senderId: widget.user.id,receiverId: orders[index]['patient'],meetingLink:orders[index]['meeting_link'])));
                                                     
                                                   }),
                                             )

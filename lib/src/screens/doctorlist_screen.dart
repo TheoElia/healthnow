@@ -1,12 +1,16 @@
+
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:healthnowapp/src/data/data.dart';
+// import 'package:healthnowapp/src/data/data.dart';
 import 'package:healthnowapp/src/models/models.dart';
 import 'package:healthnowapp/src/screens/dashboard_screen.dart';
 import 'package:healthnowapp/src/screens/doctor_info_screen.dart';
-import 'package:healthnowapp/src/screens/login.dart';
+// import 'package:healthnowapp/src/screens/login.dart';
 import 'package:healthnowapp/src/screens/register.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:nb_utils/src/extensions/widget_extensions.dart';
 
 class DoctorList extends StatefulWidget {
   final int categoryId;
