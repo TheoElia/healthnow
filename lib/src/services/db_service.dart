@@ -26,7 +26,7 @@ class DBProvider {
    final Database? db = await open();
 
     await db!.insert(
-      'messages',
+      'chats',
       message.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -36,7 +36,7 @@ class DBProvider {
     final Database? db = await open();
 
     // Query the table for all The Chat.
-    final List<Map<String, dynamic>> maps = await db!.query('messages');
+    final List<Map<String, dynamic>> maps = await db!.query('chats');
 
     // Convert the List<Map<String, dynamic> into a List<Chat>.
     return List.generate(maps.length, (i) {
@@ -52,7 +52,7 @@ class DBProvider {
   Future<void> updateMessage(MessageModel message) async {
      final Database? db = await open();
     await db!.update(
-      'messages',
+      'chats',
       message.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
       // Ensure that the Chat has a matching id.
