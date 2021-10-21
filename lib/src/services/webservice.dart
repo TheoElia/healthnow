@@ -14,9 +14,9 @@ class Resource<T> {
 class Webservice {
   Future<T> load<T>(Resource<T> resource) async {
     final pref = await SharedPreferences.getInstance();
-    final k = 'uuid';
-    final myuid = pref.getString(k) ?? '0';
-    print(myuid);
+    // final k = 'uuid';
+    // final myuid = pref.getString(k) ?? '0';
+    // print(myuid);
     Map<String, String> requestHeaders = {
       // 'Content-type': 'application/json',
       'Accept': 'application/json',
@@ -32,6 +32,7 @@ class Webservice {
     if (response.statusCode == 200) {
       return resource.parse(response);
     } else {
+      print(resource.parse(response));
       throw Exception('Failed to load data!');
     }
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:healthnowapp/src/screens/choice.dart';
 import 'package:healthnowapp/src/screens/dashboard_screen.dart';
+import 'package:healthnowapp/src/screens/doctorlist_screen.dart';
 import 'package:healthnowapp/src/screens/register.dart';
 import 'dart:convert';
 import 'package:http/http.dart';
@@ -95,43 +96,39 @@ class MyCustomFormState extends State<MyCustomForm> {
   void Login(email, password) async {
     showLoaderDialog(context, "Please wait...");
     final pref = await SharedPreferences.getInstance();
-    final k = 'uuid';
-    final myuid = pref.getString(k) ?? '0';
-    final number = "233" + email;
-    print(number);
+    // final k = 'uuid';
+    // final myuid = pref.getString(k) ?? '0';
+    // final number = "233" + email;
+    final cat = pref.getInt('category') ?? 0;
+    // print(number);
     print(password);
     Map<String, String> requestHeaders = {
-      
       'Accept': 'application/json',
-      
-      
     };
 
     Response response =
-        await post(Uri(),
+        await post(Uri.parse('https://healthnow.pywe.org/api/v1/accounts/login-user/'),
             headers: requestHeaders,
             body: jsonEncode({
-              'phone': number,
-              'password': password,
-              'refer': ''
-              
+              'email': email,
+              'password': password, 
             }));
     print(response.body);
     Map data = jsonDecode(response.body);
     print(data);
     if (data['success']) {
       var user = data['user']['user'];
-      var settings = data['user']['settings'];
-      var profile = data['user']['profile'];
+      // var settings = data['user']['settings'];
+      // var profile = data['user']['profile'];
       var wallet = data['user']['wallet'];
       _saveObj('user', jsonEncode(user));
-      _saveObj('settings', jsonEncode(settings));
-      _saveObj('profile', jsonEncode(profile));
+      // _saveObj('settings', jsonEncode(settings));
+      // _saveObj('profile', jsonEncode(profile));
       _saveObj('wallet', jsonEncode(wallet));
       print(data);
-      
-      
-      
+      Navigator.pushReplacement(
+          context, new MaterialPageRoute(builder: (context) => DoctorList(categoryId:cat,)
+          ));
     } else {
       Navigator.of(context, rootNavigator: true).pop();
       showDialog(
@@ -301,23 +298,7 @@ class MyCustomFormState extends State<MyCustomForm> {
           SizedBox(
             height: 10.0,
           ),
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
+
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
             child: Center(
@@ -334,14 +315,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                     ),
                   ),
                   onPressed: () {
-                    
-                    
-                    
-                    Navigator.pushReplacement(
-                      context,
-                      new MaterialPageRoute(
-                          builder: (context) => 
-                          new DashBoard(categories: [],isProfessional: false,)));
+                    Login(email.text, password.text);
+                    // Navigator.pushReplacement(
+                    //   context,
+                    //   new MaterialPageRoute(
+                    //       builder: (context) => 
+                    //       new DashBoard(categories: [],isProfessional: false,)));
                     
                   },
                   color: Color(0xFFef3131),

@@ -385,7 +385,7 @@ class _DoctorsInfoState extends State<DoctorsInfo> {
     final w = 'wallet';
     String wallet = pref.getString(w) ?? '0';
     String mywallet = wallet;
-    int userId = myuser.id;
+    String userId = myuser.username;
     print(fee);
     print(id);
     print(text);

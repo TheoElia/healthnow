@@ -77,7 +77,7 @@ class _ChatScreenState extends State<ChatScreen> {
     Random random =Random();
     if (msgController.text.trim().isNotEmpty) {
       var msgModel = MessageModel(
-        msgId: random.nextInt(10000000000000),
+        msgId: random.nextInt(1000),
         msg: msgController.text.toString(),
         receiverId: widget.receiverId,
         senderId: widget.senderId,
