@@ -352,6 +352,12 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                               height: 35,
                                               child: Text("Waiting")
                                             ),
+                                            if (orders[index]['status'] == "declined")
+                                            Container(
+                                              width: 58,
+                                              height: 35,
+                                              child: Text("Declined")
+                                            ),
                                           if (orders[index]['paid'])
                                             Container(
                                               width: 80,
