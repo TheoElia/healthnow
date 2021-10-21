@@ -231,7 +231,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                               onPressed: () {
                                 var url =
                                     "https://healthnow.pywe.org/accounts/topup/" +
-                                        myuser.id.toString();
+                                        myuser.username.toString();
                                 Navigator.of(context, rootNavigator: true)
                                     .pop();
                                 _launchURL(url);
@@ -281,11 +281,11 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: <Widget>[
-                                          Text(
-                                            '${orders[index]['status']}',
-                                            style:
-                                                TextStyle(color: Colors.grey),
-                                          ),
+                                          // Text(
+                                          //   '${orders[index]['status']}',
+                                          //   style:
+                                          //       TextStyle(color: Colors.grey),
+                                          // ),
                                           Container(
                                             width: MediaQuery.of(context).size.width*0.3,
                                             child: Text(
@@ -299,7 +299,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                             style:
                                                 TextStyle(color: Colors.black),
                                           ),
-                                          if (!orders[index]['paid'])
+                                          if (!orders[index]['paid'] && orders[index]['status'] == "accepted")
                                             Container(
                                               width: 58,
                                               height: 35,
@@ -337,7 +337,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                                       // the person has to topup
                                                       var url =
                                                           "https://healthnow.pywe.org/accounts/topup/" +
-                                                              widget.user.id.toString();
+                                                              widget.user.username.toString();
                                                       Navigator.of(context,
                                                               rootNavigator:
                                                                   true)
@@ -345,6 +345,12 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                                       _launchURL(url);
                                                     }
                                                   }),
+                                            ),
+                                          if (!orders[index]['paid'] && orders[index]['status'] == "pending")
+                                            Container(
+                                              width: 58,
+                                              height: 35,
+                                              child: Text("Waiting")
                                             ),
                                           if (orders[index]['paid'])
                                             Container(
@@ -399,8 +405,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                               );
                             })
                         : Center(
-                            child: CircularProgressIndicator(
-                                color: Color(0xFFef3131))),
+                            child: Text("Requests appears here")),
                   ),
                 ],
               ),
