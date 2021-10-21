@@ -55,6 +55,8 @@ class _ChatScreenState extends State<ChatScreen> {
 
     //   }
     // });
+    await Provider.of<MessagingProvider>(context, listen: false)
+          .updateChats();
     Timer.periodic(new Duration(seconds: 3), (timer) async {
       var newMsg = await getNewMsg(widget.senderId, widget.receiverId);
       for (var msg in newMsg!) {
