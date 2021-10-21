@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:healthnowapp/src/data/data.dart';
+import 'package:healthnowapp/src/data/messaging_provider.dart';
 import 'package:healthnowapp/src/models/models.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -30,12 +33,14 @@ class _ChatScreenState extends State<ChatScreen> {
   ScrollController scrollController = ScrollController();
   TextEditingController msgController = TextEditingController();
   FocusNode msgFocusNode = FocusNode();
-  var msgListing = [];
+  late MessagingProvider messagingProvider;
+  List<MessageModel> get msgListing=> messagingProvider.chats;
   var personName = 'Riri';
 
   @override
   void initState() {
     super.initState();
+    
     init();
   }
 
@@ -47,19 +52,18 @@ class _ChatScreenState extends State<ChatScreen> {
     //     setState(() {
     //       msgListing.insert(0, msg);
     //     });
-        
+
     //   }
     // });
-    Timer.periodic(new Duration(seconds: 3), (timer)  async{
-   var newMsg = await getNewMsg(widget.senderId,widget.receiverId);
+    Timer.periodic(new Duration(seconds: 3), (timer) async {
+      var newMsg = await getNewMsg(widget.senderId, widget.receiverId);
       for (var msg in newMsg!) {
         print(msg.receiverId);
-        setState(() {
-          msgListing.insert(0, msg);
-        });
-        
+        await Provider.of<MessagingProvider>(context, listen: false)
+          .addMessageToChat(msg);
+       
       }
-});
+    });
   }
 
   @override
@@ -70,15 +74,18 @@ class _ChatScreenState extends State<ChatScreen> {
   sendClick() async {
     DateFormat formatter = DateFormat('hh:mm a');
     // init();
+    Random random =Random();
     if (msgController.text.trim().isNotEmpty) {
       var msgModel = MessageModel(
-          msg: msgController.text.toString(),
-          receiverId: widget.receiverId,
-          senderId: widget.senderId,
-          // time: formatter.format(DateTime.now())
-          );
+        msgId: random.nextInt(10000000000000),
+        msg: msgController.text.toString(),
+        receiverId: widget.receiverId,
+        senderId: widget.senderId,
+        // time: formatter.format(DateTime.now())
+      );
       hideKeyboard(context);
-      msgListing.insert(0, msgModel);
+      await Provider.of<MessagingProvider>(context, listen: false)
+          .addMessageToChat(msgModel);
       sendMessage(
         widget.senderId,
         widget.receiverId,
@@ -112,6 +119,12 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    messagingProvider = Provider.of<MessagingProvider>(context);
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -132,11 +145,13 @@ class _ChatScreenState extends State<ChatScreen> {
           ],
         ),
         actions: [
-          GestureDetector(child:Padding(
-              padding: EdgeInsets.only(right: 16),
-              child: Icon(Icons.video_call, color: Colors.black, size: 25)),onTap: () {
-              launch("${widget.meetingLink}");
-          })
+          GestureDetector(
+              child: Padding(
+                  padding: EdgeInsets.only(right: 16),
+                  child: Icon(Icons.video_call, color: Colors.black, size: 25)),
+              onTap: () {
+                launch("${widget.meetingLink}");
+              })
         ],
       ),
       body: Stack(
