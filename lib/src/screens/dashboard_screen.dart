@@ -12,7 +12,7 @@ import 'package:nb_utils/src/extensions/widget_extensions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 String selectedCategorie = "Adults";
-bool userExists = false;
+
 
 class DashBoard extends StatefulWidget {
   final List<CategoryModel>? categories;

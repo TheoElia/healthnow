@@ -15,38 +15,41 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  bool userExists = false;
   @override
   void initState() {
     super.initState();
-    //  whoIsUser();
+    whoIsUser();
     init();
   }
 
   init() async {
     getCategories().then((value) {
       finish(context);
-      DashBoard(categories: value,isProfessional: userExists,).launch(context);
+      DashBoard(
+        categories: value,
+        isProfessional: userExists,
+      ).launch(context);
     });
   }
 
-  whoIsUser() async{
+  whoIsUser() async {
     final pref = await SharedPreferences.getInstance();
     final u = 'user';
     String user = pref.getString(u) ?? '0';
-    if(user != '0'){
+    if (user != '0') {
       User myuser = User.fromJson(user);
       print(myuser);
-    setState(() {
-        if(myuser.isProfessional){
+      setState(() {
+        if (myuser.isProfessional) {
           userExists = true;
-        }else{
+        } else {
           userExists = false;
         }
-          });
-    }else{
+      });
+    } else {
       userExists = false;
     }
-    
   }
 
   @override
@@ -59,12 +62,12 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Center(
         child: Text(
-                "Your HealthNow",
-                style: TextStyle(
-                    color: Colors.red.withOpacity(0.8),
-                    fontSize: 30,
-                    fontWeight: FontWeight.w600),
-              ),
+          "Your HealthNow",
+          style: TextStyle(
+              color: Colors.red.withOpacity(0.8),
+              fontSize: 30,
+              fontWeight: FontWeight.w600),
+        ),
       ),
     );
   }
