@@ -144,7 +144,7 @@ class MessageModel {
 
   factory MessageModel.fromMap(Map<String, dynamic> map) {
     return MessageModel(
-      msgId: map['msgId'],
+      msgId: map['id'],
       senderId: map['sender'],
       receiverId: map['recipient'],
       msg: map['message'],
