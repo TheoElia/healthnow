@@ -121,24 +121,22 @@ class MyCustomFormState extends State<MyCustomForm> {
     print(data);
     if (data['success']) {
       var user = data['user']['user'];
-      // var settings = data['user']['settings'];
-      // var profile = data['user']['profile'];
       var wallet = data['user']['wallet'];
       _saveObj('user', jsonEncode(user));
-      // _saveObj('settings', jsonEncode(settings));
-      // _saveObj('profile', jsonEncode(profile));
       _saveObj('wallet', jsonEncode(wallet));
-      print(data);
-      if(user['is_professional']){
+      print(user['is_professional']);
+      if(user['is_professional'] == true){
         if(cat == 0)
         {
+          print("here");
           goToDashboard();
+        }else{
+           Navigator.pushReplacement(
+          context, new MaterialPageRoute(builder: (context) => DoctorList(categoryId:cat,)
+          ));
         }
       }else{
-        if(cat == 0)
-        {
-           toDashboard();
-        }else{
+        if(cat == 0){toDashboard();}else{
           Navigator.pushReplacement(
           context, new MaterialPageRoute(builder: (context) => DoctorList(categoryId:cat,)
           ));
@@ -156,14 +154,15 @@ class MyCustomFormState extends State<MyCustomForm> {
   }
 
   goToDashboard() async{
+    print("pro dash");
     final pref = await SharedPreferences.getInstance();
     final u = 'user';
     String user = pref.getString(u) ?? '0';
     final w = 'wallet';
     String wallet = pref.getString(w) ?? '0';
     String mywallet = wallet;
-    User myuser = User.fromJson(jsonDecode(user));
-    Navigator.push(
+    User myuser = User.fromJson(user);
+    Navigator.pushReplacement(
                       context,
                       new MaterialPageRoute(
                           builder: (context) => 
@@ -177,8 +176,8 @@ class MyCustomFormState extends State<MyCustomForm> {
     final w = 'wallet';
     String wallet = pref.getString(w) ?? '0';
     String mywallet = wallet;
-    User myuser = User.fromJson(jsonDecode(user));
-    Navigator.push(
+    User myuser = User.fromJson(user);
+    Navigator.pushReplacement(
         context,
         new MaterialPageRoute(
             builder: (context) => new OrdersScreen(
@@ -362,7 +361,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                     ),
                   ),
                   onPressed: () {
-                    Login(email.text, password.text);
+                    Login(email.text.trim(), password.text.trim());
                     // Navigator.pushReplacement(
                     //   context,
                     //   new MaterialPageRoute(

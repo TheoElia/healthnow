@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-     whoIsUser();
+    //  whoIsUser();
     init();
   }
 
@@ -35,6 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
     String user = pref.getString(u) ?? '0';
     if(user != '0'){
       User myuser = User.fromJson(user);
+      print(myuser);
     setState(() {
         if(myuser.isProfessional){
           userExists = true;
