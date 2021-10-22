@@ -45,7 +45,7 @@ class _DashBoardState extends State<DashBoard> {
     final w = 'wallet';
     String wallet = pref.getString(w) ?? '0';
     String mywallet = wallet;
-    User myuser = User.fromJson(jsonDecode(user));
+    User myuser = User.fromJson(user);
     Navigator.push(
                       context,
                       new MaterialPageRoute(

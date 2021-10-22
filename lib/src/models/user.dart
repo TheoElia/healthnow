@@ -39,9 +39,9 @@ class User {
     return User(
     id:map['id']??0,
       username:map['username'],
-      fullName:map['fullName']??'',
+      fullName:map['full_name']??'',
       password:map['password']??'',
-      isProfessional:map['isProfessional']??false,
+      isProfessional:map['is_professional']??false,
     );
   }
 }
